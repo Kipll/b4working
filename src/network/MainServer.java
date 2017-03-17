@@ -73,16 +73,19 @@ public class MainServer extends Thread {
 
 				Player player = new Player(game, keyboard, mouse);
 				player.viewport = new Viewport(game, player);
-				game.players.add(player);
+				
 				//
 				// new Server(clientSocket, p);
 				//
 				;
 
-				connections.add(0, new Server(socket, p2, ip, player));	// creates
+				connections.add(new Server(socket, p2, ip, player));	// creates
 													// a
 																			// new
-				connections.get(0).start(); // UDPServer
+				
+				connections.getLast().start(); 
+				game.players.add(player);
+											// UDPServer
 											// with the
 											// Datagram
 											// Server object
