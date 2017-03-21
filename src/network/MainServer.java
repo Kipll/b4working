@@ -1,5 +1,6 @@
 package network;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -53,6 +54,7 @@ public class MainServer extends Thread {
 																// client
 																// connection
 				System.out.println(clientSocket.getLocalPort());
+				new DataOutputStream(clientSocket.getOutputStream()).writeInt(p + c);
 				clientSocket.close(); // closes the socket so can be used for as
 										// Datagram Socket
 				System.out.println("clientSocket.close() done");

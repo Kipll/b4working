@@ -1,6 +1,7 @@
 package network;
 
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -25,10 +26,12 @@ public class TCPClient {
 			int serverPort = s.getPort(); // gets the port number of the server;
 			int localPort = s.getLocalPort();
 			InetAddress serverAddress = s.getInetAddress(); // gets the Inet address of the server
+			
+			int p = new DataInputStream(s.getInputStream()).readInt();
 			s.close();
 			
 			DatagramSocket socket = new DatagramSocket(localPort);
-			this.udpC = new UDPClient(socket, serverPort, serverAddress);
+			this.udpC = new UDPClient(socket, p, serverAddress);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
