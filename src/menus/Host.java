@@ -49,9 +49,14 @@ public class Host extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				click.playOnce();
-				new Main().start();
-				new TCPClient(4444, "localhost");
+				Main m =  new Main();
+				m.start();
+				
+				TCPClient c = new TCPClient(4444, "localhost");
+				c.start();
+				System.out.println("past c.start");
 				//TO BE IMPLEMENTED.
+				
 			}
 		});
 		add(btnStartGame);
