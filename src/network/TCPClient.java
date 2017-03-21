@@ -22,6 +22,10 @@ public class TCPClient extends Thread {
 	}
 	public void run(){
 		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e1) {
+		}
+		try {
 			Socket s = new Socket(name, port); //create new socket with given port and name;
 			int serverPort = s.getPort(); // gets the port number of the server;
 			int localPort = s.getLocalPort();

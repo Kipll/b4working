@@ -53,6 +53,7 @@ public class Host extends JPanel
 				m.start();
 				
 				TCPClient c = new TCPClient(4444, "localhost");
+				
 				c.start();
 				System.out.println("past c.start");
 				//TO BE IMPLEMENTED.
