@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.lang.Cloneable;
 
-public class Projectile extends Entity{
+public class Projectile extends Entity implements Cloneable{
 	public boolean isDisposable = false;
 	public double damage;
 	public Point2D.Double knockbackDir;
@@ -98,5 +99,12 @@ public class Projectile extends Entity{
 			else if(hitbox instanceof Circle) viewport.drawCircle(getPos(), getSize(), color, g);
 		}
 		else viewport.drawCircleSprite(getPos(), getSize(), anim, g);
+	}
+	
+	@Override
+	public Entity clone(){
+		Projectile proj = new Projectile(damage, hitbox.clone(), (Point2D.Double)(getKnockback().clone()), immunityTime, player, hasLifetime, lifetime, breaksOnContact, color, anim, rotationSpeed, hitsMonsters, hitsPlayers);
+		cloneBehaviour(proj);
+		return proj;
 	}
 }

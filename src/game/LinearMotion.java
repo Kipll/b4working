@@ -24,4 +24,11 @@ public class LinearMotion implements Behaviour{
 		pos.x += dir.x*delta;
 		pos.y += dir.y*delta;
 	}
+	
+	
+	public Behaviour clone(){
+		LinearMotion lm = new LinearMotion(3, new Point2D.Double(1,1), new Point2D.Double(2,2));
+		lm.dir = dir;
+		return lm;
+	}
 }

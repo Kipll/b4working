@@ -31,5 +31,9 @@ public class RotateBehaviour extends LinearHome{
 		towards.x = around.x + r*Math.cos(angle);
 		towards.y = around.y + r*Math.sin(angle);
 	}
+	
+	public Behaviour clone(){
+		return new RotateBehaviour(speed, r, (Point2D.Double)(around.clone()));
+	}
 
 }

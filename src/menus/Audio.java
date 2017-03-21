@@ -8,11 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
-
-import audio.BGM;
+import audio.*;
 import menus.Mainframe;
 
 /*
@@ -34,28 +31,30 @@ public class Audio extends JPanel
 	public BGM click;
 	public JButton btnBack;
 	public JButton btnExit;
-	public JToggleButton tglbtnNewToggleButton;
+	private BGM bgm;
 	
-	public String test = null; //for junit 
+	public String test = null; //for JUnit 
 	
-	public Audio(Mainframe m) 
+	public Audio(Mainframe m, BGM bgm) 
 	{
 		super();
 		this.m = m;
+		this.bgm = bgm;
+		click = new BGM(10,"/Music/SFX_Click.wav");
 		
-		setBackground(Color.BLACK);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		
-		click = new BGM(10,"/Music/SFX_Click.wav");
+		
 		
 		/*
 		 * Back button
 		 */
 		btnBack = new JButton();
-		btnBack.setBounds(10, 201, 90, 50);
-		ImageIcon btnBackIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(90, 50, Image.SCALE_DEFAULT));
+		btnBack.setBounds(20, 450, 180, 100);
+		ImageIcon btnBackIcon = new ImageIcon(new ImageIcon("Resources/Images/back_button.png").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
 		btnBack.setIcon(btnBackIcon);
+		btnBack.setBorderPainted(false);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -70,10 +69,10 @@ public class Audio extends JPanel
 		 * Exit button		
 		 */
 		btnExit = new JButton();
-		btnExit.setBounds(334, 201, 90, 50);
-		ImageIcon btnExitIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(90, 50, Image.SCALE_DEFAULT));
+		btnExit.setBounds(694, 450, 180, 100);
+		ImageIcon btnExitIcon = new ImageIcon(new ImageIcon("Resources/Images/exit_button.png").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
 		btnExit.setIcon(btnExitIcon);
-//		btnExit.addActionListener(e -> System.exit(0));
+		btnExit.setBorderPainted(false);
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -83,37 +82,30 @@ public class Audio extends JPanel
 			}
 		});
 		add(btnExit);
-		
-		
+	
 		/*
-		 * To be completed
+		 * Audio Controls
 		 */
-		tglbtnNewToggleButton = new JToggleButton("Mute/Unmute");
-		tglbtnNewToggleButton.setBounds(148, 36, 121, 23);
-		tglbtnNewToggleButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				click.playOnce();
-				test = "mute";
-			}
-		});
-		add(tglbtnNewToggleButton);
-		
-		JSlider slider = new JSlider();
-		slider.setToolTipText("50");
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		slider.setMinorTickSpacing(25);
-		slider.setBounds(106, 70, 200, 26);
-		add(slider);
-		
+		BGMComponent audioPanel = new BGMComponent(bgm, 0, 100, 50);
+		audioPanel.setBounds(100, 100, 500, 500);
+		this.add(audioPanel);
+			
 		/*
 		 * Audio title graphic
 		 */
+		/*
 		JLabel titleLabel = new JLabel();
-		titleLabel.setBounds(108, 11, 213, 64);
-		ImageIcon titleIcon = new ImageIcon(new ImageIcon("Resources/Images/audioLogo1.png").getImage().getScaledInstance(200,64, Image.SCALE_DEFAULT));
+		titleLabel.setBounds(246, 11, 426, 128);
+		ImageIcon titleIcon = new ImageIcon(new ImageIcon("Resources/Images/audioLogo1.png").getImage().getScaledInstance(426, 128, Image.SCALE_DEFAULT));
 		titleLabel.setIcon(titleIcon);
 		add(titleLabel);
+		*/
+		/*
+		 * Background
+		 */
+		JLabel background = new JLabel();
+		background.setBounds(0, 0, 900, 600);
+		background.setIcon(new ImageIcon(new ImageIcon("Resources/Images/audio_background.png").getImage().getScaledInstance(900, 600, Image.SCALE_DEFAULT)));
+		add(background);
 	}
 }

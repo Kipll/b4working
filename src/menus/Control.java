@@ -28,7 +28,7 @@ public class Control extends JPanel
 	
 	public JButton btnBack;
 	public JButton btnExit;
-	public String test = null;
+	public String test = null; //JUnit
 	private BGM click;
 	
 	public Control(Mainframe m) 
@@ -36,20 +36,20 @@ public class Control extends JPanel
 		
 		super();
 		this.m = m;
-		
-		setBackground(Color.BLACK);
+		click = new BGM(10,"/Music/SFX_Click.wav");
+
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		
-		click = new BGM(10,"/Music/SFX_Click.wav");
-		
+				
 		/*
 		 * Back button
 		 */
 		btnBack = new JButton();
-		btnBack.setBounds(10, 201, 90, 50);
-		ImageIcon btnBackIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(90, 50, Image.SCALE_DEFAULT));
+		btnBack.setBounds(20, 450, 180, 100);
+		ImageIcon btnBackIcon = new ImageIcon(new ImageIcon("Resources/Images/back_button.png").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
 		btnBack.setIcon(btnBackIcon);
+		btnBack.setBorderPainted(false);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -64,10 +64,10 @@ public class Control extends JPanel
 		 * Exit button
 		 */		
 		btnExit = new JButton();
-		btnExit.setBounds(334, 201, 90, 50);
-		ImageIcon btnExitIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(90, 50, Image.SCALE_DEFAULT));
+		btnExit.setBounds(694, 450, 180, 100);
+		ImageIcon btnExitIcon = new ImageIcon(new ImageIcon("Resources/Images/exit_button.png").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
 		btnExit.setIcon(btnExitIcon);
-//		btnExit.addActionListener(e -> System.exit(0));
+		btnExit.setBorderPainted(false);
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -79,23 +79,22 @@ public class Control extends JPanel
 		add(btnExit);
 		
 		/*
-		 * Controls title graphic
-		 */
-		JLabel titleLabel = new JLabel();
-		titleLabel.setBounds(108, 11, 213, 64);
-		ImageIcon titleIcon = new ImageIcon(new ImageIcon("Resources/Images/controlsLogo1.png").getImage().getScaledInstance(200,64, Image.SCALE_DEFAULT));
-		titleLabel.setIcon(titleIcon);
-		add(titleLabel);
-		
-		/*
 		 * Controls graphic
 		 */
-		int controlsWidth = 350;
-		int controlsHeight = 120;
+		int controlsWidth = 700;
+		int controlsHeight = 240;
 		JLabel controlsLabel = new JLabel();
-		controlsLabel.setBounds(44, 56, 363, 166);
+		controlsLabel.setBounds(95, 172, controlsWidth, controlsHeight);
 		ImageIcon controlsIcon = new ImageIcon(new ImageIcon("Resources/Images/controls4.png").getImage().getScaledInstance(controlsWidth, controlsHeight, Image.SCALE_DEFAULT));
 		controlsLabel.setIcon(controlsIcon);
 		add(controlsLabel);	
+		
+		/*
+		 * Background JLabel
+		 */
+		JLabel background = new JLabel();
+		background.setBounds(0, 0, 900, 600);
+		background.setIcon(new ImageIcon(new ImageIcon("Resources/Images/controls_background.png").getImage().getScaledInstance(900, 600, Image.SCALE_DEFAULT)));
+		add(background);
 	}
 }

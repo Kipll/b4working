@@ -17,6 +17,8 @@ public abstract class Entity implements Comparable<Entity>{
 	
 	public abstract boolean disposable();
 	
+	//public abstract Entity clone();
+	
 	public void update(double delta, Game game){
 		ListIterator<Behaviour> bit = behaviour.listIterator(0);
 		while(bit.hasNext()){Behaviour b = bit.next(); b.update(game, getPos(), delta); if(b.disposable()) bit.remove();}
@@ -34,5 +36,13 @@ public abstract class Entity implements Comparable<Entity>{
 	@Override
 	public int compareTo(Entity e){
 		return hashCode() - e.hashCode();
+	}
+	
+	
+	public abstract Entity clone();
+	
+	public void cloneBehaviour(Entity e){
+		ListIterator<Behaviour> bit = behaviour.listIterator(0);
+		while(bit.hasNext()){e.behaviour.add(bit.next().clone());}
 	}
 }

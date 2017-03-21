@@ -9,13 +9,13 @@ import network.*;
 
 import java.awt.*;
 
-public class Main{
+public class Main extends Thread{
 	public GamePanel gamePane;
 	//public BGM bgm = new BGM(50,"../Music/BGM_Asian_Gravedrum.wav");
 	
-	public void gameLoop()
+	public void run()
 	{
-		
+		this.gamePane = new GamePanel();
 		
 	//	bgm.play();
 //		bgm.update();
@@ -75,6 +75,6 @@ public class Main{
 		window.addMouseMotionListener(m.gamePane.mouse);
         
         window.setVisible(true);
-		m.gameLoop();
+		//m.gameLoop();
 	}
 }

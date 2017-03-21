@@ -136,4 +136,8 @@ public class CircleSector implements Shape{
 		}
 		else return false;
 	}
+	
+	public Shape clone(){
+		return new CircleSector(radius, (Point2D.Double)(center.clone()), arcStart, arcLen);
+	}
 }

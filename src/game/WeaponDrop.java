@@ -61,4 +61,11 @@ public class WeaponDrop extends Entity{
 			weapon = w;
 		}
 	}
+	
+	@Override
+	public Entity clone(){
+		WeaponDrop wd = new WeaponDrop((Point2D.Double)(getPos().clone()), weapon);
+		cloneBehaviour(wd);
+		return wd;
+	}
 }

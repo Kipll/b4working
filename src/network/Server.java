@@ -8,18 +8,6 @@ import java.util.Scanner;
 
 import game.Player;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.nio.ByteBuffer;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import game.Player;
-
-//import game.Player;
-
 public class Server extends Thread{
 
 	
@@ -55,7 +43,7 @@ public class Server extends Thread{
 //public class Server{
 //
 //	private Sender sender;
-//	private Listener listener;
+//	private ServerListener listener;
 //	private Socket clientSocket;
 //	private Player p;
 //
@@ -70,7 +58,7 @@ public class Server extends Thread{
 //		try {
 //
 //			this.sender = new Sender(new DataOutputStream(clientSocket.getOutputStream()));
-//			this.listener = new Listener(new DataInputStream(clientSocket.getInputStream()), p);
+//			this.listener = new ServerListener(new DataInputStream(clientSocket.getInputStream()), p);
 //			sender.start();
 //			listener.start();
 //		} catch (IOException e) {

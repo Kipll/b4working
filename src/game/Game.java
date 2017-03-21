@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 import levels.Level;
 import levels.TestLevel;
-
+import network.ServerListener;
 import network.ClientListener;
 import network.Server;
 import network.MainServer;
@@ -58,7 +58,7 @@ public class Game{
 	public double minSpawnTime;
 	public double timeUntilSpawn;
 	
-	public int score = 0;
+	int score = 0;
 	
 	public void spawnEntity(Entity e){
 		entitiesWaiting.add(e);
@@ -67,8 +67,40 @@ public class Game{
 		monstersWaiting.add(e);
 	}
 	
+	public void setScore(int s){
+		score = s;
+		
+		Iterator<Player> pit = players.iterator();
+		while(pit.hasNext()){
+			Player pl = pit.next();
+			int[] ints = new int[]{
+					-5,
+					0,
+					score,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+			};
+			pl.viewport.server.addToQueue(ints);
+//			pl.viewport.server.addToQueue(-5);
+//			pl.viewport.server.addToQueue(0);
+//			pl.viewport.server.addToQueue(score);
+//			pl.viewport.server.addToQueue(0);
+//			pl.viewport.server.addToQueue(0);
+//			pl.viewport.server.addToQueue(0);
+//			pl.viewport.server.addToQueue(0);
+//			pl.viewport.server.addToQueue(0);
+//			pl.viewport.server.addToQueue(0);
+//			pl.viewport.server.addToQueue(0);
+		}
+	}
+	
 	//private levels.Level level = new levels.TestLevel(this);
-	//java is dumb //lol
+	//java is dumb
 	
 	public Game(KeyboardInput keyboard, MouseInput mouse){
 		isRunning = true;
@@ -128,6 +160,7 @@ public class Game{
 			{
 				timeUntilSpawn = minSpawnTime + rand.nextDouble()*(maxSpawnTime - minSpawnTime);
 				spawnMonster(new DefaultMonster(this, new Point2D.Double(rand.nextDouble()*roomW, rand.nextDouble()*roomH)));
+				if(monsters.size()%4==0) {spawnMonster(new Monster2(this, new Point2D.Double(rand.nextDouble()*roomW, rand.nextDouble()*roomH)));}
 			}
 			else timeUntilSpawn -= delta;
 		}
@@ -143,10 +176,10 @@ public class Game{
 	}
 	
 	public void drawOnViewport(Graphics2D g, Viewport viewport){
-		int[] input = new int[ClientListener.inputSize];
+		int ints[] = new int[10];
 		for(int i=0;i<ClientListener.inputSize;i++)
-			input[i] = -1;
-		viewport.server.addToQueue(input);
+			ints[i] = -1;
+			viewport.server.addToQueue(ints);
 	
 	
 		viewport.drawRectAbsolute(new Point(0,0), viewport.screenW, viewport.screenH, Color.BLACK, g);
@@ -158,8 +191,6 @@ public class Game{
 		
 		viewport.drawSprite(new Rectangle.Double(0,0,roomW,roomH), arena, g);
 		
-		level.draw(g, viewport);
-		
 		Iterator<Player> pit = players.iterator();
 		while(pit.hasNext())pit.next().draw(g, viewport);
 		ListIterator<Monster> mit = monsters.listIterator(0);
@@ -167,9 +198,7 @@ public class Game{
 		ListIterator<Entity> eit = entities.listIterator(0);
 		while(eit.hasNext())eit.next().draw(g, viewport);
 		
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-		g.drawString(Integer.toString(score), 30, 30);
+		level.drawFrontTiles(g, viewport);
 		
 		viewport.drawRectAbsolute(new Point(30,60),100,10, Color.BLACK, g);
 		viewport.drawRectAbsolute(new Point(30,60),(int)(100 * viewport.p.hp / viewport.p.maxHp),10, Color.RED, g);

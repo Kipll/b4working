@@ -16,7 +16,7 @@ import game.Viewport;
  * @author Luke
  *
  */
-public class Wall extends Prop {
+public class Wall extends Tile {
 
 	/**
 	 * 
@@ -28,9 +28,9 @@ public class Wall extends Prop {
 		 * this.setHitboxRight(1.0); this.setHitboxBottom(1.0);
 		 */
 		/////this.setImageLocation("wall.png");
-		this.setDestination(new Rectangle2D.Double(x, y, w, h));
+		//this.setDestination(new Rectangle2D.Double(x, y, w, h));
 		/////this.setAnimation(new Animation(SPRITESHEET.getSprite(SPRITESHEET.MONSTER), 0, 0, 0.1, Animation.AnimationMode.PLAYONCE));
-		this.setAnimation(new Animation(SpritesheetEnum.WALL,0,0,0.1,Animation.AnimationMode.LOOP));
+		//this.setAnimation(new Animation(SpritesheetEnum.WALL,0,0,0.1,Animation.AnimationMode.LOOP));
 	}
 
 }

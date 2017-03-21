@@ -1,5 +1,4 @@
 package network;
-
 import java.nio.ByteBuffer;
 
 /**

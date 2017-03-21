@@ -5,7 +5,7 @@ import java.awt.geom.Point2D.Double;
 import game.Animation;
 import game.Spritesheet;
 
-public class CardboardBox extends Prop {
+public class CardboardBox extends Tile {
 
 	public CardboardBox() {
 		/*

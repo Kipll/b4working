@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
-import audio.BGM;
 
+//import audio.SFX;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -30,16 +30,6 @@ public class Monster extends Projectile{
 	
 	private Random random;
 	
-	/**
-	 * 
-	 * @param game			Game object
-	 * @param contactDamage	The damage cause by monster
-	 * @param size			The size of monster
-	 * @param pos			The position of monster
-	 * @param hp			The health point of monster
-	 * @param expWorth		The amount of monster's experience worth 
-	 * @param anim			The animation of monster
-	 */
 	public Monster(Game game, double contactDamage, double size, Point2D.Double pos, double hp, double expWorth, Animation anim){
 		super(contactDamage, new Circle(size, pos), new Point2D.Double(0,0), 0.1, null, false, 0, false, null, anim, 0, false, true);
 		this.random = new Random();
@@ -65,14 +55,10 @@ public class Monster extends Projectile{
 		addBehaviour(new JumpAround(2.8, 0.4));	*/
 	}
 	
-	/**
-	 * 
-	 * @param p Weapon
-	 */
 	public void hit(Projectile p){
 		if(!immunities.containsKey(p)){
 			//decrease damage
-			p.player.exp += expWorth*Math.min(hp,p.damage)/maxHp;
+			p.player.setExp((int)(p.player.exp + expWorth*Math.min(hp,p.damage)/maxHp));
 			hp -= p.damage;
 			
 			//apply knockback
@@ -90,13 +76,15 @@ public class Monster extends Projectile{
 	
 	public void update(double delta, Game game){
 		if(hp<=0){
-			BGM deathSound = new BGM(100, "/Music/SFX_Monster_3.wav");
-			deathSound.playOnce();
+		//	SFX deathSound = new SFX(100, "/Music/SFX_Monster_3.wav");
+		//	deathSound.play();
 			dead = true;
-			game.score++;
+			game.setScore(game.score+1);
 			try{
 				if(random.nextDouble()<0.33)game.spawnEntity(new Fairy(7.0, 0.1, 10, 0.2, 2.8, new Point2D.Double(getPos().x, getPos().y), lastHitBy.player, game));
-				if(random.nextDouble()<0.1){
+				
+				double dropType = random.nextDouble();
+				if(dropType<0.1){
 					Weapon w = null;
 					double wchance = random.nextDouble();
 					if(wchance<0.33){
@@ -107,6 +95,9 @@ public class Monster extends Projectile{
 						w = new Gun(game,null);
 					}
 					game.spawnEntity(new WeaponDrop((Point2D.Double)(getPos().clone()),w));
+				}
+				else if(dropType<0.35){
+					game.spawnEntity(new FirstAid(65,(Point2D.Double)(getPos().clone()),0.03));
 				}
 			}
 			catch(NullPointerException e){}

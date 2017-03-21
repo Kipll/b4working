@@ -45,4 +45,8 @@ public class Gravitate implements Behaviour{
 		pos.x += (v.x + v0.x)*delta/2;
 		pos.y += (v.y + v0.y)*delta/2;
 	}
+	
+	public Behaviour clone(){
+		return new Gravitate((Point2D.Double)(towards.clone()), accfactor);
+	}
 }

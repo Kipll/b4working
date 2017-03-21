@@ -3,33 +3,38 @@ package game;
 import java.awt.event.*;
 
 import network.ClientSender;
-import network.ServerSender;
+
 
 import java.awt.Point;
 
 public class ClientInputListener implements MouseMotionListener, MouseListener, KeyListener, ComponentListener {
 
-	
 	private static final int KEY_COUNT = 256;
 	
-	private int[] message;
 	public ClientSender sender;
 
-	public ClientInputListener(ClientSender sender2) {
+	public ClientInputListener(ClientSender sender) {
 
-		this.sender = sender2;
+		this.sender = sender;
 	}
 
 	public void mousePressed(MouseEvent e) {
-		
 		switch (e.getButton()) {
 		case MouseEvent.BUTTON1:
-			message = new int[]{3,-1,-1};
-			sender.addToQueue(message);
+			int[] ints = new int[]{
+					3,
+					-1,
+					-1
+			};
+			sender.addToQueue(ints);
 			break;
 		case MouseEvent.BUTTON3:
-			message = new int[]{5,-1,-1};
-			sender.addToQueue(message);
+			ints = new int[]{
+					5,
+					-1,
+					-1
+			};
+			sender.addToQueue(ints);
 			break;
 		}
 	}
@@ -37,22 +42,31 @@ public class ClientInputListener implements MouseMotionListener, MouseListener, 
 	public void mouseReleased(MouseEvent e) {
 		switch (e.getButton()) {
 		case MouseEvent.BUTTON1:
-			message = new int[]{2,-1,-1};
-		sender.addToQueue(message);
-
+			int[] ints = new int[]{
+					2,
+					-1,
+					-1
+			};
+			sender.addToQueue(ints);
 			break;
 		case MouseEvent.BUTTON3:
-
-			message = new int[]{4,-1,-1};
-			sender.addToQueue(message);
+			ints = new int[]{
+					4,
+					-1,
+					-1
+			};
+			sender.addToQueue(ints);
 			break;
 		}
 	}
 
 	public void mouseMoved(MouseEvent e) {
-
-		message = new int[]{6,e.getX(),e.getY()};
-		sender.addToQueue(message);
+		int[] ints = new int[]{
+				6,
+				e.getX(),
+				e.getY()
+		};
+		sender.addToQueue(ints);
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -65,20 +79,27 @@ public class ClientInputListener implements MouseMotionListener, MouseListener, 
 	}
 
 	public void mouseDragged(MouseEvent e) {
-
-		message = new int[]{6,e.getX(),e.getY()};
-		sender.addToQueue(message);
-	}
+		int[] ints = new int[]{
+				6,
+				e.getX(),
+				e.getY()
+		};
+		sender.addToQueue(ints);
+		}
 
 	public synchronized void keyPressed(KeyEvent e) {
 
 		int keyCode = e.getKeyCode();
 
 		if (keyCode >= 0 && keyCode < KEY_COUNT) {
+			int[] ints = new int[]{
+					1,
+					keyCode,
+					-1
+			};
 
-
-			message = new int[]{1,keyCode,-1};
-			sender.addToQueue(message);
+			sender.addToQueue(ints);
+			
 
 		}
 
@@ -89,11 +110,13 @@ public class ClientInputListener implements MouseMotionListener, MouseListener, 
 		int keyCode = e.getKeyCode();
 
 		if (keyCode >= 0 && keyCode < KEY_COUNT) {
-
-
-			message = new int[]{0,keyCode,-1};
-			sender.addToQueue(message);;
-
+			int[] ints = new int[]{
+					0,
+					keyCode,
+					-1
+			};
+			
+			sender.addToQueue(ints);
 		}
 
 	}
@@ -106,9 +129,12 @@ public class ClientInputListener implements MouseMotionListener, MouseListener, 
 	
 	public void componentResized(ComponentEvent e) {
 	
-
-		message = new int[]{7,e.getComponent().getWidth(),e.getComponent().getHeight()};
-		sender.addToQueue(message);
+			int[] ints = new int[]{
+					7,
+					e.getComponent().getWidth(),
+					e.getComponent().getHeight()
+			};
+			sender.addToQueue(ints);
 	}
 	
 	

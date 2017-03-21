@@ -2,7 +2,7 @@ package game;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import network.ServerSender;
+
 import network.ClientListener;
 import network.ClientSender;
 

@@ -2,12 +2,13 @@ package audio;
 
 import javax.swing.JLabel;
 import java.util.Observer;
+import java.awt.Color;
 import java.util.Observable;
 
 /**
  * 
  * @author Farrah Aina Mohd Zulkifli
- *
+ * @author Jack Marshman - Changes to the class are aesthetic
  */
 //Text view of date of BGM gui
 
@@ -27,6 +28,11 @@ public class BGMView extends JLabel implements Observer
 		boolean mute = model.getMuteStatus();
 		int value = model.getValue();
 		setText("Volume : " + value + "%");
+		
+		/*
+		 * Changes colour of "Volume"
+		 */
+		setForeground(Color.WHITE);
 
 	}
 	

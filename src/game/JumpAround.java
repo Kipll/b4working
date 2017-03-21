@@ -54,4 +54,8 @@ public class JumpAround implements Behaviour{
 			break;
 		}
 	}
+	
+	public Behaviour clone(){
+		return new JumpAround(waitingTime, movingTime);
+	}
 }

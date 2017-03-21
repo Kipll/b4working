@@ -29,4 +29,8 @@ public class Knockback implements Behaviour{
 		pos.x += (delta/time) * displacement.x;
 		pos.y += (delta/time) * displacement.y;
 	}
+	
+	public Behaviour clone(){
+		return new Knockback((Point2D.Double)(displacement.clone()), time);
+	}
 }

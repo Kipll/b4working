@@ -5,6 +5,11 @@ import java.awt.Image;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
 import javax.sql.rowset.CachedRowSet;
@@ -15,12 +20,15 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.*;
 import java.io.*;
 
+import game.Animation;
 import game.Circle;
+import game.SpritesheetEnum;
 import game.Viewport;
 
 public class Level {
 
-	private static final boolean debug = true;
+	private static final double width = 0.25;
+	private static final boolean dodebug = true;
 	private int difficulty;
 
 	private double roomW; // in game units
@@ -32,7 +40,20 @@ public class Level {
 	private int backgroundImageH;
 
 	private ArrayList<Wave> waveList = new ArrayList<Wave>();
-	private ArrayList<Prop> propList = new ArrayList<Prop>();
+	private ArrayList<Tile> backTiles = new ArrayList<Tile>(); // tiles behind
+																// all others
+	private ArrayList<Tile> middleTiles = new ArrayList<Tile>(); // tiles on top
+																	// of
+																	// background
+																	// but
+																	// behind
+																	// monsters/players
+	private ArrayList<Tile> frontTiles = new ArrayList<Tile>(); // tiles on top
+																// of
+																// monsters/players
+	private Set<Tile> collisionTiles = new HashSet<Tile>();
+
+	private int spritesheetVal = SpritesheetEnum.TERRAIN;
 
 	/*
 	 * public Level() { this.roomW = 20; this.roomH = 16; //
@@ -49,8 +70,16 @@ public class Level {
 		parseXML(xml);
 	}
 
+	private void debug(String s) {
+		if (dodebug)
+			System.out.println(s);
+
+	}
 
 	private void parseXML(String fileName) {
+		HashMap<Character, Animation> charAnimationMap = new HashMap<Character, Animation>();
+		ArrayList<Character> charCollisionList = new ArrayList<Character>();
+
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -60,21 +89,132 @@ public class Level {
 			Document doc = builder.parse(file);
 			doc.getDocumentElement().normalize();
 
-			NodeList nodeList = doc.getChildNodes();
+			NodeList tilesetNodes = doc.getElementsByTagName("tileset");
 
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node node = nodeList.item(i);
-				if (debug)
-					System.out.println("Exploring: " + node.getNodeName());
+			for (int i = 0; i < tilesetNodes.getLength(); i++) {
+				Node tilesetNode = tilesetNodes.item(i);
+				System.out.println("\nCurrent Element :" + tilesetNode.getNodeName());
 
-				switch (node.getNodeName()) {
-				case "map":
-					NodeList mapChildren = node.getChildNodes();
+				Element tilesetElement = (Element) tilesetNode;
+				boolean collision = tilesetElement.getAttribute("collision").trim().contentEquals("1");
+				System.out.println("Collision = " + collision);
+				NodeList tileNodes = tilesetElement.getElementsByTagName("tile");
 
-					break;
-				case "monsters":
-					break;
+				for (int j = 0; j < tileNodes.getLength(); j++) {
+					// System.out.println("\nCurrent Element :" +
+					// tilesetNode.getNodeName());
+					Node tileNode = tileNodes.item(j);
+					Element tileElement = (Element) tileNode;
+
+					debug(tileElement.getAttribute("name"));
+
+					int x = Integer.parseInt(tileElement.getAttribute("x").trim());
+					int y = Integer.parseInt(tileElement.getAttribute("y").trim());
+					Character c = tileElement.getAttribute("char").charAt(0);
+
+					debug("x = " + String.valueOf(x));
+					debug("y = " + String.valueOf(y));
+					debug("c = " + String.valueOf(c));
+					debug("");
+
+					charAnimationMap.put(c, new Animation(spritesheetVal, x, y, 0, Animation.AnimationMode.PLAYONCE));
+
+					if (collision) {
+						charCollisionList.add(c);
+					}
 				}
+
+			}
+
+			System.out.print(charAnimationMap.toString());
+
+			NodeList mapNodes = doc.getElementsByTagName("map");
+
+			for (int i = 0; i < mapNodes.getLength(); i++) {
+				Node mapNode = mapNodes.item(i);
+				System.out.println("\nCurrent Element :" + mapNode.getNodeName());
+
+				Element mapElement = (Element) mapNode;
+				int layer = Integer.parseInt(mapElement.getAttribute("layer").trim());
+
+				System.out.println("Layer = " + layer);
+				String mapStr = mapElement.getTextContent();
+				debug(mapStr);
+
+				String[] mapLines = mapStr.split("\\r?\\n");
+
+				// roomW = mapLines.
+				if (mapLines.length <= 2) {
+					throw new IllegalArgumentException("No map found");
+				}
+
+				roomH = mapLines.length - 2;
+				roomW = mapLines[1].length();
+
+				for (int j = 1; j <= roomH; j++) {
+					if (mapLines[j].length() != roomW) {
+						throw new IllegalArgumentException("Widths are not consistent");
+					}
+					debug(mapLines[j]);
+					System.out.println(mapLines[j].length());
+
+					for (int k = 0; k < roomW; k++) {
+						System.out.println(k);
+						char currentChar = mapLines[j].charAt(k);
+
+						if (currentChar != ' ') {
+
+							if (!charAnimationMap.containsKey(currentChar)) {
+								throw new IllegalArgumentException(
+										"Character not declared as tile in tileset: " + currentChar);
+							}
+
+							int x = k;
+							int y = j - 1;
+							Animation anim = charAnimationMap.get(currentChar);
+							Tile tile = new Tile(x, y, anim);
+
+							switch (layer) {
+							case 0:
+								backTiles.add(tile);
+								break;
+							case 1:
+								middleTiles.add(tile);
+								break;
+							case 2:
+								frontTiles.add(tile);
+								break;
+							default:
+								throw new IllegalArgumentException("Map layer must be in the range 0-2");
+							}
+
+							if (charCollisionList.contains(currentChar)) {
+								// TODO Add position to a list of collisions
+								collisionTiles.add(tile);
+
+							}
+						}
+
+					}
+				}
+
+				/*
+				 * for (int j = 0; j < tileNodes.getLength(); j++) { //
+				 * System.out.println("\nCurrent Element :" + //
+				 * tilesetNode.getNodeName()); Node tileNode =
+				 * tileNodes.item(j); Element tileElement = (WElement) tileNode;
+				 * 
+				 * debug(tileElement.getAttribute("name"));
+				 * 
+				 * int x =
+				 * Integer.parseInt(tileElement.getAttribute("x").trim()); int y
+				 * = Integer.parseInt(tileElement.getAttribute("y").trim());
+				 * char c = tileElement.getAttribute("char").charAt(0);
+				 * 
+				 * debug("x = " + String.valueOf(x)); debug("y = " +
+				 * String.valueOf(y)); debug("c = " + String.valueOf(c));
+				 * debug(""); }
+				 */
 
 			}
 
@@ -94,13 +234,27 @@ public class Level {
 
 	}
 
-	protected void addProp(Prop p) {
-		propList.add(p);
+	protected void addTile(Tile t) {
+		// tileList.add(t);
 	}
 
-	public void draw(Graphics2D g, Viewport vp) {
-		for (Prop p : propList) {
-			p.draw(g, vp);
+	public void drawBackTiles(Graphics2D g, Viewport vp) {
+		for (Tile t : backTiles) {
+			t.draw(g, vp);
+		}
+		return;
+	}
+	
+	public void drawMiddleTiles(Graphics2D g, Viewport vp) {
+		for (Tile t : middleTiles) {
+			t.draw(g, vp);
+		}
+		return;
+	}
+	
+	public void drawFrontTiles(Graphics2D g, Viewport vp) {
+		for (Tile t : frontTiles) {
+			t.draw(g, vp);
 		}
 		return;
 	}
@@ -144,9 +298,19 @@ public class Level {
 	 * @return true if valid position
 	 */
 	public Boolean validPos(Circle c) {
-		for (Prop p : propList) {
-			if (c.intersects(p.getDestination()))
+
+		/*
+		 * double x = c.getCenter().getX(); double y = c.getCenter().getY();
+		 * double radius = c.getRadius();
+		 * 
+		 * int left = (int) Math.round((x - radius)/width); double right = x +
+		 * radius; double top = y - radius; double bottom = y + radius;
+		 */
+
+		for (Tile t : collisionTiles) {
+			if (c.intersects(t.getDestination())) {
 				return false;
+			}
 		}
 
 		return true;

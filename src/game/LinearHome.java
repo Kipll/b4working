@@ -26,4 +26,8 @@ public class LinearHome implements Behaviour{
 		pos.x += (towards.x-pos.x)*speed*delta/r;
 		pos.y += (towards.y-pos.y)*speed*delta/r;
 	}
+	
+	public Behaviour clone(){
+		return new LinearHome(speed, (Point2D.Double)(towards.clone()));
+	}
 }
