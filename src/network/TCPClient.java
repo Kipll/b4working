@@ -30,6 +30,7 @@ public class TCPClient {
 			s.close();
 			
 			DatagramSocket socket = new DatagramSocket(localPort);
+			System.out.println("@@@@@@@@@@@@@@@@@ AM MAKING UDP CLIENT @@@@@@@@@@@@@@@");
 			this.udpC = new UDPClient(socket, p, serverAddress);
 		} catch (IOException e) {
 			e.printStackTrace();

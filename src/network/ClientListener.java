@@ -54,10 +54,6 @@ public class ClientListener extends Thread {
 				socket.receive(packet);
 				recievedData = packet.getData();
 				input = ByteConversion.toInts(recievedData);
-				System.out.println("testing");
-				for (int i = 0; i < input.length; i++) {
-					System.out.println(input[i]);
-				}
 				
 				
 				if(input[0]>=0){

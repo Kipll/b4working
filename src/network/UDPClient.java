@@ -35,6 +35,7 @@ public class UDPClient {
 		this.window = new ClientWindow(this.sender);
 		this.listener = new ClientListener(socket, window);
 		this.window.cl = listener;
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@window.paintImmediately");
 		window.paintImmediately(window.getBounds());
 		sender.start();
 		listener.start();

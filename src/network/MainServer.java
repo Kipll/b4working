@@ -67,10 +67,6 @@ public class MainServer extends Thread {
 				new DataOutputStream(clientSocket.getOutputStream()).writeInt(p + c);
 				clientSocket.close(); // closes the socket so can be used for as
 										// Datagram Socket
-				System.out.println("clientSocket.close() done");
-
-				System.out.println(p);
-
 				DatagramSocket socket = new DatagramSocket(p + c); // create a
 				c++;
 				// Datagram
