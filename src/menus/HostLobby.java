@@ -154,7 +154,7 @@ public class HostLobby extends JPanel {
 				server.StartAll();
 				//server.reset();
 				
-				TCPClient c = new TCPClient(4446, "localhost");
+				TCPClient c = new TCPClient(4444, "localhost");
 				
 				
 			}
