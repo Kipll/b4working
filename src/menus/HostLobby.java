@@ -22,8 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import audio.BGM;
+import game.Game;
+import game.KeyboardInput;
 import game.Main;
+import game.MouseInput;
 import lobby.LobbyMServer;
+import network.MainServer;
 import network.TCPClient;
 
 public class HostLobby extends JPanel {
@@ -149,8 +153,7 @@ public class HostLobby extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				click.playOnce();
-				Main m = new Main();
-				m.start();
+				MainServer s = new MainServer(4445, new Game(new KeyboardInput(), new MouseInput()));
 				server.StartAll();
 				//server.reset();
 				
