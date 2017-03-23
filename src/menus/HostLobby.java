@@ -149,7 +149,8 @@ public class HostLobby extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				click.playOnce();
-				new Main().start();
+				Main m = new Main();
+				m.start();
 				server.StartAll();
 				//server.reset();
 				

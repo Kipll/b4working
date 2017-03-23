@@ -14,6 +14,12 @@ public class Main extends Thread {
 	public BGM bgm = new BGM(50,"/Music/BGM_Asian_Gravedrum.wav");
 	
 	public Main(){
+		super();
+		
+	}
+	
+	public void run()
+	{
 		this.gamePane = new GamePanel();
 		
 		JFrame window = new JFrame("Test");
@@ -27,11 +33,6 @@ public class Main extends Thread {
         
         window.setVisible(true);
 
-	}
-	
-	public void run()
-	{
-		
 		
 	//	bgm.play();
 //		bgm.update();
