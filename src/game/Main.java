@@ -13,6 +13,10 @@ public class Main extends Thread {
 	public GamePanel gamePane;
 	public BGM bgm = new BGM(50,"/Music/BGM_Asian_Gravedrum.wav");
 	
+	public Main(){
+		this.gamePane = new GamePanel();
+	}
+	
 	public void run()
 	{
 		
@@ -66,14 +70,14 @@ public class Main extends Thread {
 		Main m = new Main();
 		m.gamePane = new GamePanel();
 
-		JFrame window = new JFrame("Test");
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(640,420);
-        window.add(m.gamePane);
-        
-        window.addKeyListener(m.gamePane.keyboard);
-		window.addMouseListener(m.gamePane.mouse);
-
+//		JFrame window = new JFrame("Test");
+//		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		window.setSize(640,420);
+//        window.add(m.gamePane);
+//        
+//        window.addKeyListener(m.gamePane.keyboard);
+//		window.addMouseListener(m.gamePane.mouse);
+//
 //		JFrame window = new JFrame("Test");
 //		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		window.setSize(640,420);
@@ -86,11 +90,11 @@ public class Main extends Thread {
 //        window.setVisible(true);
 		m.start();
 
-		
-
-        
-        window.setVisible(true);
-
+//		
+//
+//        
+//        window.setVisible(true);
+//
 
 	}
 }
