@@ -15,6 +15,18 @@ public class Main extends Thread {
 	
 	public Main(){
 		this.gamePane = new GamePanel();
+		
+		JFrame window = new JFrame("Test");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setSize(640,420);
+        window.add(this.gamePane);
+        
+        window.addKeyListener(this.gamePane.keyboard);
+		window.addMouseListener(this.gamePane.mouse);
+		window.addMouseMotionListener(this.gamePane.mouse);
+        
+        window.setVisible(true);
+
 	}
 	
 	public void run()
@@ -70,14 +82,14 @@ public class Main extends Thread {
 		Main m = new Main();
 		m.gamePane = new GamePanel();
 
-//		JFrame window = new JFrame("Test");
-//		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		window.setSize(640,420);
-//        window.add(m.gamePane);
-//        
-//        window.addKeyListener(m.gamePane.keyboard);
-//		window.addMouseListener(m.gamePane.mouse);
-//
+		JFrame window = new JFrame("Test");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setSize(640,420);
+        window.add(m.gamePane);
+        
+        window.addKeyListener(m.gamePane.keyboard);
+		window.addMouseListener(m.gamePane.mouse);
+
 //		JFrame window = new JFrame("Test");
 //		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		window.setSize(640,420);
@@ -88,7 +100,7 @@ public class Main extends Thread {
 //		window.addMouseMotionListener(m.gamePane.mouse);
 //        
 //        window.setVisible(true);
-		m.start();
+//		m.start();
 
 //		
 //
