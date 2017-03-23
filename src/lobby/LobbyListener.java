@@ -41,7 +41,7 @@ public class LobbyListener extends Thread {
 						this.owner.removePlayer(name);
 					}
 				} else {
-					if(message.equals("**START**")){
+					if(message.equals("**STARTGAME**")){
 						this.member.startGame();	
 					} else if (message.equals("**RESET**")){
 						this.member.leave();

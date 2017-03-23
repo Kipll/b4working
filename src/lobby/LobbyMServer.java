@@ -6,8 +6,10 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import menus.HostLobby;
@@ -19,7 +21,7 @@ public class LobbyMServer extends Thread {
 	private LobbyServer sc;
 	private boolean running;
 	private ServerSocket socket;
-	private Map<InetAddress,LobbyServer> connections =  new HashMap<InetAddress, LobbyServer>();
+	private ArrayList<LobbyServer>connections =  new ArrayList<LobbyServer>();
 	public LobbyMServer(int port, HostLobby lobby) {
 		//this.connections = new LinkedList<Server>();
 		this.port = port;
@@ -39,9 +41,12 @@ public class LobbyMServer extends Thread {
 		
 		while (running){
 			try {
+	
+				System.out.println("to connect use name : " + getLocalName());
 				Socket clientSocket = socket.accept();
-
+				System.out.println("connection accepted");
 				sc = new LobbyServer(clientSocket, lobby);
+				this.connections.add(sc);
 				String nickname;
 				nickname = new DataInputStream(clientSocket.getInputStream()).readUTF();
 			
@@ -57,7 +62,7 @@ public class LobbyMServer extends Thread {
 		
 	}
 	
-	public void addtToQueue(String input){
+	private void addtToQueue(String input){
 		for (int i = 0; i < connections.size(); i++) {
 			connections.get(i).addToQueue(input);
 		}
@@ -86,5 +91,14 @@ public class LobbyMServer extends Thread {
 	}
 
 	
-
+	private String getLocalName() {
+		InetAddress addr = null;
+		try {
+			addr = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return addr.getHostName();
+	}
+	
 }

@@ -100,7 +100,7 @@ public class Mainframe extends JFrame
 				break;
 			}	
 			
-			//Host
+			//Lobby Host
 			case 4:
 			{
 				cardLayout.show(cardPanel, "4");
@@ -127,9 +127,11 @@ public class Mainframe extends JFrame
 				this.revalidate();
 				break;
 			}
+			//Lobby Member
 			case 7:
 			{
-				if(this.lobbym.joinLobby(this.find.getNickName()) == true){
+				System.out.println("trying to connect to : " + this.find.IP);
+				if(this.lobbym.joinLobby(this.find.txtNickname.getText(), this.find.txtHostIP.getText()) == true){
 					cardLayout.show(cardPanel, "7");
 				} else {
 					this.find.couldntFind();

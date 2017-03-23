@@ -175,11 +175,11 @@ public class LobbyMember extends JPanel {
 //		tableModel.setValueAt(nicknames.get(0),0,1);
 //	}
 
-	public boolean joinLobby(String name) {
-		if(this.client.connect(4444, "test") == true){
-			this.txtNickname.setText(name);
-			this.client.addToQueue(name);
-			this.hostIP = name;
+	public boolean joinLobby(String nickname, String host) {
+		if(this.client.connect(4444, host) == true){
+			this.txtNickname.setText(nickname);
+			this.client.addToQueue(nickname);
+			this.hostIP = host;
 			return true;
 		}else {
 			return false;
@@ -187,7 +187,9 @@ public class LobbyMember extends JPanel {
 	}
 
 	public void startGame() {
-		new TCPClient(4445, hostIP);
+		System.out.println("starting game");
+		String[] args = new String[]{"4445", hostIP};
+		TCPClient.main(args);
 		
 		
 	}

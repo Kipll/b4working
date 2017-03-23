@@ -21,7 +21,9 @@ public class LobbySender extends Thread {
 
 			try {
 				while (running) {
-					out.writeUTF(queue.take());
+					String message = queue.take();
+					System.out.println("writing message : " + message);
+					out.writeUTF(message);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
