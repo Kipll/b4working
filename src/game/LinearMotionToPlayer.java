@@ -19,12 +19,16 @@ public class LinearMotionToPlayer extends LinearMotion{
 				Player tow = game.players.peek();
 				if(tow == null) throw new NoSuchElementException();
 			
-				dir = new LinearMotion(speed, tow.getPos(), pos).dir;
+				dir = (new LinearMotion(speed, tow.getPos(), pos)).dir;
 			}
 			catch(NoSuchElementException e){System.err.println("please dont leave exceptions empty");}
 			live = true;
 		}
 		pos.x += dir.x*delta;
 		pos.y += dir.y*delta;
+	}
+	
+	public Behaviour clone(){
+		return new LinearMotionToPlayer(speed, new Point2D.Double(), new Point2D.Double());
 	}
 }

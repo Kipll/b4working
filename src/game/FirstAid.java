@@ -10,11 +10,13 @@ public class FirstAid extends Entity{
 	public double heals;
 	public Circle hitbox;
 	public boolean delete;
-
+	public Animation anim;
+	
 	public FirstAid(double heals, Point2D.Double pos, double size){
 		this.heals = heals;
 		this.hitbox = new Circle(size, pos);
 		delete = false;
+		anim = new Animation(SpritesheetEnum.HP,0,0,0.1,Animation.AnimationMode.PLAYONCE);
 	}
 	
 	public boolean disposable(){
@@ -33,7 +35,7 @@ public class FirstAid extends Entity{
 	}
 	
 	public void draw(Graphics2D g, Viewport viewport){
-		viewport.drawCircle(getPos(), hitbox.getRadius(), Color.GREEN, g);
+		viewport.drawCircleSprite(getPos(), hitbox.getRadius(), anim,g);
 	}
 	
 	public Entity clone(){

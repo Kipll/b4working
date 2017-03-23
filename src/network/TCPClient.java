@@ -10,7 +10,7 @@ import game.ClientWindow;
 
 
 
-public class TCPClient extends Thread {
+public class TCPClient {
 	
 	private int port;
 	private String name;
@@ -19,12 +19,7 @@ public class TCPClient extends Thread {
 	public TCPClient(int port, String name) {
 		this.port = port;
 		this.name = name;
-	}
-	public void run(){
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e1) {
-		}
+		
 		try {
 			Socket s = new Socket(name, port); //create new socket with given port and name;
 			int serverPort = s.getPort(); // gets the port number of the server;

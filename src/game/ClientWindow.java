@@ -18,7 +18,7 @@ public class ClientWindow extends JPanel{
 	public ClientWindow(ClientSender sender){
 		super();
 		
-		frame = new JFrame("Hello World");
+		frame = new JFrame("betrayal");
 	
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(640,420);

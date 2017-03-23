@@ -22,7 +22,7 @@ public class Fairy extends Projectile{
 	 * @param game		Game object
 	 */
 	public Fairy(double lifetime, double size, double damage, double hitrate, double acceleration, Point2D.Double pos, Player player, Game game){
-		super(damage, new Circle(size, pos), new Point2D.Double(0,0), hitrate, player, true, lifetime, false, Color.YELLOW, null, 0, true, false);
+		super(damage, new Circle(size, pos), new Point2D.Double(0,0), hitrate, player, true, lifetime, false, Color.YELLOW,new Animation(SpritesheetEnum.FAIRY,0,0,0.1,Animation.AnimationMode.PLAYONCE), 0, true, false);
 		
 		addBehaviour(new Gravitate(player.pos, acceleration));
 	}

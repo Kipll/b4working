@@ -30,15 +30,15 @@ public class PeriodicalSpawnBehaviour implements Behaviour{
 	
 	public void update(Game game, Point2D.Double pos, double delta){
 		
+		timeLeft -= delta;
+		
 		while(timeLeft<=0){
-			timeLeft -= delta;
+			timeLeft += time;
 			ListIterator<Double> pit;
 			ListIterator<Entity> lit;
 			ListIterator<LinkedList<Entity>> llit;
 			LinkedList<Entity> le;
-			double sum;
-			timeLeft += time;
-			sum = 0;
+			double sum = 0;
 			pit = probs.listIterator();
 			while(pit.hasNext()){sum += pit.next();}
 			double prob = random.nextDouble()*sum;
@@ -49,7 +49,13 @@ public class PeriodicalSpawnBehaviour implements Behaviour{
 				le = llit.next();
 				if(prob<0){
 					lit = le.listIterator();
-					while(lit.hasNext()){game.spawnEntity(lit.next().clone());}
+					while(lit.hasNext()){
+						Entity ent = lit.next().clone();
+						Point2D.Double pp = ent.getPos();
+						pp.x = pos.x;
+						pp.y = pos.y;
+						game.spawnEntity(ent); System.out.println("Ooga-Booga-Booga");
+					}
 					break;
 				}
 			}

@@ -44,7 +44,7 @@ public class Game{
 	public LinkedList<Entity> entitiesWaiting;
 	
 	public Server server;
-	public static int port = 4444;
+	public static int port = 4445;
 	
 	//private Viewport viewport;
 	

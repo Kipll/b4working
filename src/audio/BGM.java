@@ -1,5 +1,8 @@
 package audio;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -20,7 +23,8 @@ public class BGM
 	private Clip clip;
 	public FloatControl volume;
 	public BooleanControl muteControl;
-
+	private String linuxfile = "../Resources";
+	private String windowsfile  = "../b4/Resources";
 	
 	/**
 	 * Read the audio file and opens the clip
@@ -32,26 +36,39 @@ public class BGM
 		this.value = value;
 		
 		try {
-		      
-			AudioInputStream ais =
-				AudioSystem.getAudioInputStream(
-					getClass().getResourceAsStream(s)
-				);
-			AudioFormat baseFormat = ais.getFormat();
-			AudioFormat decodeFormat = new AudioFormat(
-				AudioFormat.Encoding.PCM_SIGNED,
-				baseFormat.getSampleRate(),
-				16,
-				baseFormat.getChannels(),
-				baseFormat.getChannels() * 2,
-				baseFormat.getSampleRate(),
-				false
-			);
-			AudioInputStream dais =
-				AudioSystem.getAudioInputStream(
-					decodeFormat, ais);
+//		      
+//			AudioInputStream ais =
+//				AudioSystem.getAudioInputStream(
+//					getClass().getResourceAsStream(s)
+//				);
+//			AudioFormat baseFormat = ais.getFormat();
+//			AudioFormat decodeFormat = new AudioFormat(
+//				AudioFormat.Encoding.PCM_SIGNED,
+//				baseFormat.getSampleRate(),
+//				16,
+//				baseFormat.getChannels(),
+//				baseFormat.getChannels() * 2,
+//				baseFormat.getSampleRate(),
+//				false
+//			);
+//			AudioInputStream dais =
+//				AudioSystem.getAudioInputStream(
+//					decodeFormat, ais);
+//			clip = AudioSystem.getClip();
+//			clip.open(dais);
+//			
 			clip = AudioSystem.getClip();
-			clip.open(dais);
+				if(new File(windowsfile + s).exists()){
+					
+				AudioInputStream ais = AudioSystem.getAudioInputStream(new File(windowsfile + s));
+				clip.open(ais);
+				} else {
+				
+				AudioInputStream ais = AudioSystem.getAudioInputStream(new File(linuxfile + s));
+				clip.open(ais);
+				}
+			
+			
 			
 			volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);			
 			muteControl = (BooleanControl)clip.getControl(BooleanControl.Type.MUTE);

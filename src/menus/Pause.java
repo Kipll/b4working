@@ -37,7 +37,7 @@ public class Pause extends JPanel
 		 */
 		btnReturnGame = new JButton("Return to Game");
 		//btnReturnGame.setBounds();
-		ImageIcon btnReturnGameIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
+		ImageIcon btnReturnGameIcon = MenuButtonHandler.loadImageIcon("", 180,100);
 		btnReturnGame.setIcon(btnReturnGameIcon);
 		btnReturnGame.setBorderPainted(false);
 		btnReturnGame.addActionListener(new ActionListener() {
@@ -55,7 +55,7 @@ public class Pause extends JPanel
 		 */
 		btnDisconnect = new JButton();
 		//btnDisconnect.setBounds();
-		ImageIcon btnDisconnectIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
+		ImageIcon btnDisconnectIcon = MenuButtonHandler.loadImageIcon("", 180,100);
 		btnDisconnect.setIcon(btnDisconnectIcon);
 		btnDisconnect.setBorderPainted(false);
 		btnDisconnect.addActionListener(new ActionListener() {
@@ -73,7 +73,8 @@ public class Pause extends JPanel
 		 */
 		background = new JLabel();
 		background.setBounds(0, 0, 900, 600);
-		background.setIcon(new ImageIcon(new ImageIcon("").getImage().getScaledInstance(900, 600, Image.SCALE_DEFAULT)));
+		ImageIcon backgroundIcon = MenuButtonHandler.loadImageIcon("", 900,600);
+		background.setIcon(backgroundIcon);
 		add(background);
 	}
 

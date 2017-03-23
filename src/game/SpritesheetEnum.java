@@ -16,8 +16,12 @@ public final class SpritesheetEnum {
 	public static final int TERRAIN = 4;
 	public static final int MONSTER2 = 5;
 	public static final int MONSTER3 = 6;
-
-	public static final int ENUMSIZE = 7;
+	public static final int HP = 7;
+	public static final int BULLET = 8;
+	public static final int FAIRY = 9;
+	public static final int SWORD = 10;
+	
+	public static final int ENUMSIZE = 11;
 
 	private static Spritesheet getSpritesheet(int val) {
 		switch (val) {
@@ -115,7 +119,7 @@ public final class SpritesheetEnum {
 				} catch (IOException e) {
 					i = ImageIO.read(new File("../" + path));
 				}
-				return new Spritesheet(i, 5, 3, new int[] { 5, 4, 4 });
+				return new Spritesheet(i, 4, 3, new int[] { 4, 4, 4 });
 			} catch (IOException e) {
 				System.err.println(e.getStackTrace());
 				System.err.println(e.getMessage());
@@ -132,6 +136,70 @@ public final class SpritesheetEnum {
 					i = ImageIO.read(new File("../" + path));
 				}
 				return new Spritesheet(i, 5, 3, new int[] { 5, 4, 4 });
+			} catch (IOException e) {
+				System.err.println(e.getStackTrace());
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+			
+			case HP:
+			try {
+				String path = "Resources/Images/hp.png";
+				BufferedImage i = null;
+				try {
+					i = ImageIO.read(new File(path));
+				} catch (IOException e) {
+					i = ImageIO.read(new File("../" + path));
+				}
+				return new Spritesheet(i, 1, 1, new int[] { 1});
+			} catch (IOException e) {
+				System.err.println(e.getStackTrace());
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+		
+		case BULLET:
+			try {
+				String path = "Resources/Images/bullet.png";
+				BufferedImage i = null;
+				try {
+					i = ImageIO.read(new File(path));
+				} catch (IOException e) {
+					i = ImageIO.read(new File("../" + path));
+				}
+				return new Spritesheet(i, 1, 1, new int[] { 1});
+			} catch (IOException e) {
+				System.err.println(e.getStackTrace());
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+			
+		case FAIRY:
+			try {
+				String path = "Resources/Images/fairy.png";
+				BufferedImage i = null;
+				try {
+					i = ImageIO.read(new File(path));
+				} catch (IOException e) {
+					i = ImageIO.read(new File("../" + path));
+				}
+				return new Spritesheet(i, 1, 1, new int[] { 1});
+			} catch (IOException e) {
+				System.err.println(e.getStackTrace());
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+			
+		case SWORD:
+			try {
+				String path = "Resources/Images/sword.png";
+				BufferedImage i = null;
+				try {
+					i = ImageIO.read(new File(path));
+				} catch (IOException e) {
+					i = ImageIO.read(new File("../" + path));
+				}
+				return new Spritesheet(i, 1, 2, new int[] { 2 });
 			} catch (IOException e) {
 				System.err.println(e.getStackTrace());
 				System.err.println(e.getMessage());

@@ -2,15 +2,21 @@ package audio;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import menus.MenuButtonHandler;
+
 /*
+ * @author Farrah Aina Mohd Zulkifli
  * @author Jack Marshman - Changes to the class are aesthetic 
  */
 
 public class BGMMuteButton extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
 	public JButton mute;
 	
 	/**
@@ -20,14 +26,16 @@ public class BGMMuteButton extends JPanel{
 	public BGMMuteButton(BGMModel model){
 		
 		super();
+		//setLayout(null);
 		
-		mute = new JButton("Mute/Unmute");
-		/*
-		mute.setBounds(20, 450, 180, 100);
-		ImageIcon btnControlsIcon = new ImageIcon(new ImageIcon("Resources/Images/controlsLogo1.png").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
-		mute.setIcon(btnControlsIcon);
+		mute = new JButton();	
+		
+		ImageIcon btnMuteUnmuteIcon = MenuButtonHandler.loadImageIcon("Resources/Images/mute_unmute_button_2.png", 180, 100);
+		mute.setIcon(btnMuteUnmuteIcon);
+		mute.setOpaque(false);
 		mute.setBorderPainted(false);
-		*/
+		
+		
 		
 		mute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){

@@ -3,6 +3,7 @@ package audio;
 import javax.swing.JLabel;
 import java.util.Observer;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.Observable;
 
 /**
@@ -15,6 +16,7 @@ import java.util.Observable;
 public class BGMView extends JLabel implements Observer
 {
 	private BGMModel model;
+	public Font txtFont = new Font("Calibri", Font.BOLD, 30);
 	
 	/**
 	 Initialise view with model.
@@ -25,6 +27,10 @@ public class BGMView extends JLabel implements Observer
 		super();
 		this.model = model;
 		
+		//double check
+		setLayout(null);
+		
+		
 		boolean mute = model.getMuteStatus();
 		int value = model.getValue();
 		setText("Volume : " + value + "%");
@@ -33,6 +39,8 @@ public class BGMView extends JLabel implements Observer
 		 * Changes colour of "Volume"
 		 */
 		setForeground(Color.WHITE);
+		setFont(txtFont);
+		
 
 	}
 	

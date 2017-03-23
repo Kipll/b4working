@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,7 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import audio.BGM;
+import game.Game;
+import game.KeyboardInput;
 import game.Main;
+import game.MouseInput;
+import network.MainServer;
 
 
 /*
@@ -57,7 +63,10 @@ public class Start extends JPanel
 		 */
 		btnFindGame = new JButton();
 		btnFindGame.setBounds(42, 176, 360, 100);
-		ImageIcon btnFindGameIcon = new ImageIcon(new ImageIcon("Resources/Images/find_game_button.png").getImage().getScaledInstance(360, 100, Image.SCALE_DEFAULT));
+		
+		
+		ImageIcon btnFindGameIcon = MenuButtonHandler.loadImageIcon("Resources/Images/find_game_button_2.png", 360, 100);
+		
 		btnFindGame.setIcon(btnFindGameIcon);
 		btnFindGame.setBorderPainted(false);
 		btnFindGame.addActionListener(new ActionListener() {
@@ -73,16 +82,20 @@ public class Start extends JPanel
 		/*
 		 * Host Game button
 		 */
-		btnHostGame = new JButton("Host Game");
+		btnHostGame = new JButton();
 		btnHostGame.setBounds(486, 176, 360, 100);
-		ImageIcon btnHostGameIcon = new ImageIcon(new ImageIcon("").getImage().getScaledInstance(360, 100, Image.SCALE_DEFAULT));
+		
+		ImageIcon btnHostGameIcon = MenuButtonHandler.loadImageIcon("Resources/Images/host_game_button_2.png", 360, 100);
+		
+		
 		btnHostGame.setIcon(btnHostGameIcon);
 		btnHostGame.setBorderPainted(false);
 		btnHostGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				click.playOnce();	
+				click.playOnce();
 				m.setMenu(4);
+				
 			}
 		});
 		add(btnHostGame);
@@ -90,9 +103,12 @@ public class Start extends JPanel
 		/*
 		 * Controls button
 		 */
+		
+		ImageIcon btnControlsIcon  = MenuButtonHandler.loadImageIcon("Resources/Images/controls_button_2.png", 180, 100);
+		
 		btnControls = new JButton();
 		btnControls.setBounds(20, 450, 180, 100);
-		ImageIcon btnControlsIcon = new ImageIcon(new ImageIcon("Resources/Images/controls_button.png").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
+		
 		btnControls.setIcon(btnControlsIcon);
 		btnControls.setBorderPainted(false);
 		btnControls.addActionListener(new ActionListener() {
@@ -110,7 +126,10 @@ public class Start extends JPanel
 		 */
 		btnAudio = new JButton();
 		btnAudio.setBounds(351, 450, 180, 100);
-		ImageIcon btnAudioIcon = new ImageIcon(new ImageIcon("Resources/Images/audio_button.png").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
+		
+		ImageIcon btnAudioIcon = MenuButtonHandler.loadImageIcon("Resources/Images/audio_button_2.png", 180, 100);
+		
+		
 		btnAudio.setIcon(btnAudioIcon);
 		btnAudio.setBorderPainted(false);
 		btnAudio.addActionListener(new ActionListener() {
@@ -128,7 +147,7 @@ public class Start extends JPanel
 		 */
 		btnExit = new JButton();
 		btnExit.setBounds(694, 450, 180, 100);
-		ImageIcon btnExitIcon = new ImageIcon(new ImageIcon("Resources/Images/exit_button.png").getImage().getScaledInstance(180, 100, Image.SCALE_DEFAULT));
+		ImageIcon btnExitIcon = MenuButtonHandler.loadImageIcon("Resources/Images/exit_button_2.png", 180, 100);
 		btnExit.setIcon(btnExitIcon);
 		btnExit.setBorderPainted(false);
 		btnExit.addActionListener(new ActionListener() {
@@ -146,7 +165,8 @@ public class Start extends JPanel
 		 */
 		JLabel background = new JLabel();
 		background.setBounds(0, 0, 900, 600);
-		background.setIcon(new ImageIcon(new ImageIcon("Resources/Images/betrayal_background.png").getImage().getScaledInstance(900, 600, Image.SCALE_DEFAULT)));
+		ImageIcon backgroundIcon  = MenuButtonHandler.loadImageIcon("Resources/Images/betrayal_background.png", 900,600);
+		background.setIcon(backgroundIcon);
 		add(background);
 		
 		
