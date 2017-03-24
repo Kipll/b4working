@@ -31,11 +31,11 @@ public class Main extends Thread {
 		window.addMouseListener(this.gamePane.mouse);
 		window.addMouseMotionListener(this.gamePane.mouse);
         
-        window.setVisible(true);
+        //window.setVisible(true);
 
 		
 	//	bgm.play();
-//		bgm.update();
+        //	bgm.update();
 		
 	   long lastLoopTime = System.nanoTime();
 	   final int TARGET_FPS = 60;
