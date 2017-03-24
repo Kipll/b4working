@@ -80,11 +80,18 @@ public class Level {
 		HashMap<Integer, Animation> intAnimationMap = new HashMap<Integer, Animation>();
 		ArrayList<Character> charCollisionList = new ArrayList<Character>();
 
+		File file;
+		try {
+			file = new File(fileName);
+
+		} catch (Exception e) {
+			file = new File("../" + fileName);
+		}
+		
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 
-			File file = new File(fileName);
 
 			Document doc = builder.parse(file);
 			doc.getDocumentElement().normalize();

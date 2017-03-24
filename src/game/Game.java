@@ -119,15 +119,12 @@ public class Game{
 		roomW = 4;
 		roomH = 3;
 		
+		
 		try {
 			level = new Level("Resources/LevelFiles/smallestlavamap.xml");
 		} catch (ParserConfigurationException e) {
-			try {
-				level = new Level("../Resources/LevelFiles/smallestlavamap.xml");
-			} catch (ParserConfigurationException e1) {
-				System.err.println("Failed to load level");
-				e1.printStackTrace();
-			}
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		/*Player p = new Player(this, keyboard, mouse);
