@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import menus.HostLobby;
 import menus.LobbyMember;
 
 
@@ -16,22 +15,12 @@ public class LobbyClient {
 	private LobbyListener listener;
 	private boolean connected;
 	private LobbyMember member;
-	private HostLobby host;
 
 	public LobbyClient(LobbyMember member) {
 		this.sender = null;
 		this.listener = null;
 		this.connected = false;
 		this.member = member;
-		this.host = null;
-	}
-	
-	public LobbyClient(HostLobby member) {
-		this.sender = null;
-		this.listener = null;
-		this.connected = false;
-		this.host = member;
-		this.member = null;
 	}
 
 	public boolean connect(int port, String name) {
@@ -39,11 +28,7 @@ public class LobbyClient {
 
 			Socket server = new Socket(name, port);
 			sender = new LobbySender(new DataOutputStream(server.getOutputStream()));
-			
-			if(host == null)
 			listener = new LobbyListener(new DataInputStream(server.getInputStream()), member);
-			else 
-			listener = new LobbyListener(new DataInputStream(server.getInputStream()), host);
 			sender.start();
 			listener.start();
 			return true;

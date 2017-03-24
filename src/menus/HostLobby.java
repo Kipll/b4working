@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -21,13 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import audio.BGM;
-import game.Game;
-import game.KeyboardInput;
 import game.Main;
-import game.MouseInput;
-import lobby.LobbyClient;
 import lobby.LobbyMServer;
-import network.MainServer;
+import network.TCPClient;
 
 public class HostLobby extends JPanel {
 
@@ -44,7 +41,6 @@ public class HostLobby extends JPanel {
 	
 	
 	private LobbyMServer server;
-	private LobbyClient client;
 	private Mainframe m;
 	public ArrayList<InetAddress> ips;
 	public ArrayList<String> nicknames;
@@ -55,7 +51,6 @@ public class HostLobby extends JPanel {
 		super();
 		this.m = m;
 		this.server = new LobbyMServer(4444, this);
-		this.client = new LobbyClient(this);
 		this.click = new BGM(10, "/Music/SFX_Click.wav");
 		this.ips = new ArrayList<InetAddress>();
 		this.nicknames = new ArrayList<String>();
@@ -77,12 +72,8 @@ public class HostLobby extends JPanel {
 	 * starts the lobby's server which waits for others to connect
 	 */
 	private void startServer(){
-		if(this.server.isAlive() == false){
+		if(this.server.isAlive() == false)
 			this.server.start();
-			System.out.println("sever started");
-		}
-			this.client.connect(4444, "localhost");
-			
 	}
 	
 	
@@ -159,13 +150,11 @@ public class HostLobby extends JPanel {
 				
 				click.playOnce();
 				Main m = new Main();
-				server.startAll();
 				m.start();
-				
-				server.startAll();
+				server.StartAll();
 				//server.reset();
 				
-				//TCPClient c = new TCPClient(4445, "localhost");
+				TCPClient c = new TCPClient(4445, "localhost");
 				
 				
 			}

@@ -1,7 +1,12 @@
 package menus;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,6 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import audio.BGM;
+import game.Game;
+import game.KeyboardInput;
+import game.Main;
+import game.MouseInput;
+import network.MainServer;
 
 
 /*
