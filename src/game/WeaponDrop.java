@@ -12,6 +12,9 @@ public class WeaponDrop extends Entity{
 
 	public Circle hitbox;
 	public Weapon weapon;
+	public Animation anim;
+	public Animation anim2;
+	public Animation anim3;
 	
 	public static final double size = 0.1;
 
@@ -24,6 +27,9 @@ public class WeaponDrop extends Entity{
 		super();
 		this.weapon = weapon;
 		this.hitbox = new Circle(size, pos);
+		anim = new Animation(SpritesheetEnum.BOXGUN, 0, 0, 0.1, Animation.AnimationMode.PLAYONCE);
+		anim2 = new Animation(SpritesheetEnum.BOXSWORD, 0, 0, 0.1, Animation.AnimationMode.PLAYONCE);
+		anim3 = new Animation(SpritesheetEnum.BOXLASER, 0, 0, 0.1, Animation.AnimationMode.PLAYONCE);
 	}
 	
 	/**
@@ -41,7 +47,13 @@ public class WeaponDrop extends Entity{
 	 * Draw object on viewport
 	 */
 	public void draw(Graphics2D g, Viewport viewport){
-		viewport.drawCircle(hitbox.center, size, weapon.getDropColor(), g);
+			if(weapon.getDropColor()==Color.ORANGE){
+			viewport.drawCircleSprite(hitbox.center, size, anim, g);}
+			else if(weapon.getDropColor()==Color.CYAN) {
+			viewport.drawCircleSprite(hitbox.center, size, anim2, g);}
+			else if(weapon.getDropColor()==Color.RED) {
+			viewport.drawCircleSprite(hitbox.center, size, anim3, g);}
+		//viewport.drawCircle(hitbox.center, size, weapon.getDropColor(), g);
 	}
 	
 	/**

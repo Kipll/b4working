@@ -20,14 +20,20 @@ public final class SpritesheetEnum {
 	public static final int BULLET = 8;
 	public static final int FAIRY = 9;
 	public static final int SWORD = 10;
+	public static final int BULLET2 = 11;
+	public static final int BOXGUN = 12;
+	public static final int BOXSWORD = 13;
+	public static final int BOXLASER= 14;
 	
-	public static final int ENUMSIZE = 11;
+	
+	
+	public static final int ENUMSIZE = 15;
 
 	private static Spritesheet getSpritesheet(int val) {
 		switch (val) {
 		case MONSTER:
 			try {
-				String path = "Resources/Images/monster_bird.png";
+				String path = "Resources/Images/monster3.png";
 				BufferedImage i = null;
 				try {
 					i = ImageIO.read(new File(path));
@@ -35,7 +41,7 @@ public final class SpritesheetEnum {
 				} catch (IOException e) {
 					i = ImageIO.read(new File("../" + path));
 				}
-				return new Spritesheet(i, 4, 4, new int[] { 4, 4, 4, 2 });
+				return new Spritesheet(i, 4, 4, new int[] { 4, 4, 4, 4 });
 			} catch (IOException e) {
 				System.err.println(e.getStackTrace());
 				System.err.println(e.getMessage());
@@ -128,14 +134,14 @@ public final class SpritesheetEnum {
 
 		case MONSTER3:
 			try {
-				String path = "Resources/Images/monster2.png";
+				String path = "Resources/Images/monster1.png";
 				BufferedImage i = null;
 				try {
 					i = ImageIO.read(new File(path));
 				} catch (IOException e) {
 					i = ImageIO.read(new File("../" + path));
 				}
-				return new Spritesheet(i, 5, 3, new int[] { 5, 4, 4 });
+				return new Spritesheet(i, 4, 4, new int[] { 4, 4, 4 });
 			} catch (IOException e) {
 				System.err.println(e.getStackTrace());
 				System.err.println(e.getMessage());
@@ -183,7 +189,7 @@ public final class SpritesheetEnum {
 				} catch (IOException e) {
 					i = ImageIO.read(new File("../" + path));
 				}
-				return new Spritesheet(i, 1, 1, new int[] { 1});
+				return new Spritesheet(i, 1, 1, new int[] {1});
 			} catch (IOException e) {
 				System.err.println(e.getStackTrace());
 				System.err.println(e.getMessage());
@@ -192,14 +198,78 @@ public final class SpritesheetEnum {
 			
 		case SWORD:
 			try {
-				String path = "Resources/Images/sword.png";
+				String path = "Resources/Images/swordsprite_2.png";
 				BufferedImage i = null;
 				try {
 					i = ImageIO.read(new File(path));
 				} catch (IOException e) {
 					i = ImageIO.read(new File("../" + path));
 				}
-				return new Spritesheet(i, 1, 2, new int[] { 2 });
+				return new Spritesheet(i, 6, 2, new int[] { 6,6 });
+			} catch (IOException e) {
+				System.err.println(e.getStackTrace());
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+		
+		case BULLET2:
+			try {
+				String path = "Resources/Images/monster_bullet.png";
+				BufferedImage i = null;
+				try {
+					i = ImageIO.read(new File(path));
+				} catch (IOException e) {
+					i = ImageIO.read(new File("../" + path));
+				}
+				return new Spritesheet(i, 1, 1, new int[] { 1 });
+			} catch (IOException e) {
+				System.err.println(e.getStackTrace());
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+		
+		case BOXGUN:
+			try {
+				String path = "Resources/Images/gunbox.png";
+				BufferedImage i = null;
+				try {
+					i = ImageIO.read(new File(path));
+				} catch (IOException e) {
+					i = ImageIO.read(new File("../" + path));
+				}
+				return new Spritesheet(i, 1, 1, new int[] { 1 });
+			} catch (IOException e) {
+				System.err.println(e.getStackTrace());
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+			
+		case BOXSWORD:
+			try {
+				String path = "Resources/Images/swordbox.png";
+				BufferedImage i = null;
+				try {
+					i = ImageIO.read(new File(path));
+				} catch (IOException e) {
+					i = ImageIO.read(new File("../" + path));
+				}
+				return new Spritesheet(i, 1, 1, new int[] { 1 });
+			} catch (IOException e) {
+				System.err.println(e.getStackTrace());
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+			
+		case BOXLASER:
+			try {
+				String path = "Resources/Images/laserbox.png";
+				BufferedImage i = null;
+				try {
+					i = ImageIO.read(new File(path));
+				} catch (IOException e) {
+					i = ImageIO.read(new File("../" + path));
+				}
+				return new Spritesheet(i, 1, 1, new int[] { 1 });
 			} catch (IOException e) {
 				System.err.println(e.getStackTrace());
 				System.err.println(e.getMessage());
@@ -208,7 +278,6 @@ public final class SpritesheetEnum {
 		}
 
 		return null;
-
 	}
 
 	private static Spritesheet[] sprites = new Spritesheet[ENUMSIZE];

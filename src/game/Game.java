@@ -195,7 +195,8 @@ public class Game{
 			{
 				timeUntilSpawn = minSpawnTime + rand.nextDouble()*(maxSpawnTime - minSpawnTime);
 				spawnMonster(new DefaultMonster(this, new Point2D.Double(rand.nextDouble()*roomW, rand.nextDouble()*roomH)));
-				if(monsters.size()%4==0) {spawnMonster(new Monster2(this, new Point2D.Double(rand.nextDouble()*roomW, rand.nextDouble()*roomH)));}
+				if(monsters.size()%4==0) {spawnMonster(new Monster2(this, new Point2D.Double(rand.nextDouble()*roomW, rand.nextDouble()*roomH)));
+							  spawnMonster(new Monster3(this, new Point2D.Double(rand.nextDouble()*roomW, rand.nextDouble()*roomH)));}
 			}
 			else timeUntilSpawn -= delta;
 		}
