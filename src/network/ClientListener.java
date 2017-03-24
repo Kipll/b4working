@@ -39,7 +39,7 @@ public class ClientListener extends Thread {
 	}
 
 	public void run() {
-		while (isRunning = false) {
+		while (isRunning) {
 			try {
 				socket.receive(packet);
 				recievedData = packet.getData();
@@ -59,7 +59,7 @@ public class ClientListener extends Thread {
 					else if(input[0]==-1){
 					
 						g.setColor(Color.WHITE);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 8));
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
 						g.drawString("Global killcount: " + info[0], 30, 30);
 						g.drawString("Experience: " + info[1], 30, 80);
 		
