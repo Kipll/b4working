@@ -77,7 +77,7 @@ public class Level {
 	}
 
 	private void parseXML(String fileName) {
-		HashMap<Character, Animation> charAnimationMap = new HashMap<Character, Animation>();
+		HashMap<Integer, Animation> intAnimationMap = new HashMap<Integer, Animation>();
 		ArrayList<Character> charCollisionList = new ArrayList<Character>();
 
 		try {
@@ -89,7 +89,7 @@ public class Level {
 			Document doc = builder.parse(file);
 			doc.getDocumentElement().normalize();
 
-			NodeList tilesetNodes = doc.getElementsByTagName("tileset");
+			/*NodeList tilesetNodes = doc.getElementsByTagName("tileset");
 
 			for (int i = 0; i < tilesetNodes.getLength(); i++) {
 				Node tilesetNode = tilesetNodes.item(i);
@@ -126,7 +126,7 @@ public class Level {
 
 			}
 
-			System.out.print(charAnimationMap.toString());
+			System.out.print(charAnimationMap.toString());*/
 
 			NodeList mapNodes = doc.getElementsByTagName("map");
 
@@ -149,32 +149,51 @@ public class Level {
 				}
 
 				roomH = mapLines.length - 2;
-				roomW = mapLines[1].length();
+				roomW = mapLines[1].split(",").length;
 
-				for (int j = 1; j <= roomH; j++) {
-					if (mapLines[j].length() != roomW) {
+				for (int j = 1; j < roomH; j++) {
+					String[] rowItems = mapLines[j].split(",");
+
+					if (rowItems.length != roomW && j != roomH -1) {
+						for (int z = 0; z < rowItems.length; z++){
+							System.out.println(rowItems[z]);
+						}
+						System.out.println(mapLines[j].length());
+						System.out.println(rowItems.length);
+						System.out.println(roomW);
+						System.out.println(roomH);
+						System.out.println(j);
 						throw new IllegalArgumentException("Widths are not consistent");
 					}
-					debug(mapLines[j]);
-					System.out.println(mapLines[j].length());
+					// debug(mapLines[j]);
+					// System.out.println(mapLines[j].length());
 
 					for (int k = 0; k < roomW; k++) {
-						System.out.println(k);
-						char currentChar = mapLines[j].charAt(k);
+						// System.out.println(k);
+						int currentInt = Integer.parseInt(rowItems[k]);
 
-						if (currentChar != ' ') {
-
-							if (!charAnimationMap.containsKey(currentChar)) {
-								throw new IllegalArgumentException(
-										"Character not declared as tile in tileset: " + currentChar);
-							}
+						if (currentInt != 0) {
 
 							int x = k;
 							int y = j - 1;
-							Animation anim = charAnimationMap.get(currentChar);
+							int spriteX = (currentInt -1) % 32;
+							int spriteY = (currentInt -1) / 32;
+							// int x = k;
+							// int y = j - 1;
+							Animation anim;
+							if (intAnimationMap.containsKey(currentInt)) {
+								anim = intAnimationMap.get(currentInt);
+							} else {
+								anim = new Animation(spritesheetVal, spriteX, spriteY, 1, Animation.AnimationMode.PLAYONCE);
+								intAnimationMap.put(currentInt, anim);
+							}
+							
 							Tile tile = new Tile(x, y, anim);
 
 							switch (layer) {
+							case -1:
+								collisionTiles.add(tile);
+								break;
 							case 0:
 								backTiles.add(tile);
 								break;
@@ -188,11 +207,11 @@ public class Level {
 								throw new IllegalArgumentException("Map layer must be in the range 0-2");
 							}
 
-							if (charCollisionList.contains(currentChar)) {
+							/*if (charCollisionList.contains(currentChar)) {
 								// TODO Add position to a list of collisions
 								collisionTiles.add(tile);
 
-							}
+							}*/
 						}
 
 					}
@@ -244,14 +263,14 @@ public class Level {
 		}
 		return;
 	}
-	
+
 	public void drawMiddleTiles(Graphics2D g, Viewport vp) {
 		for (Tile t : middleTiles) {
 			t.draw(g, vp);
 		}
 		return;
 	}
-	
+
 	public void drawFrontTiles(Graphics2D g, Viewport vp) {
 		for (Tile t : frontTiles) {
 			t.draw(g, vp);

@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 
 import game.Animation;
 import game.Circle;
+import game.Entity;
 import game.Game;
 import game.Spritesheet;
 import game.Viewport;
@@ -35,7 +36,7 @@ public class Tile extends game.Entity {
 	private Rectangle2D.Double dest;
 	private Spritesheet ss;
 	private Animation anim;
-	private Point2D pos;
+	private Point2D.Double pos;
 
 	public Tile() {
 		
@@ -43,10 +44,10 @@ public class Tile extends game.Entity {
 
 	public Tile(int x, int y, Animation anim) {
 		this.anim = anim;
-		pos = new Point2D.Double((double)x/4, (double)y/4);
+		pos = new Point2D.Double((double)x/2, (double)y/2);
 		//setDestination((double)x, (double)y);
-		double width = (1 + (double) 1 / (double) 32) / (double) 4;
-		width = (double) 1/ (double) 4;
+		//double width = (1 + (double) 1 / (double) 32) / (double) 4;
+		double width = (double) 1/ (double) 2;
 		//width += (double) 1 / (double) 32;
 		//width = (double)1 + (double) (1/32);
 		//System.out.println("Width: " + width);
@@ -60,7 +61,7 @@ public class Tile extends game.Entity {
 	@Override
 	public Point2D.Double getPos() {
 		// TODO Auto-generated method stub
-		return null;
+		return pos;
 	}
 
 	protected Rectangle2D.Double getDestination() {
@@ -95,10 +96,13 @@ public class Tile extends game.Entity {
 	@Override
 	public void draw(Graphics2D g, Viewport viewport) {
 		//double height = viewport.game.roomH;
+		//double dif = 2/viewport.ppu;
+		//Rectangle2D.Double d = new Rectangle2D.Double(dest.x + dif, dest.y + dif, dest.width, dest.height);
+		//viewport.drawSprite(d, anim, g);
 		viewport.drawSprite(dest, anim, g);
 	}
 	
-	public game.Entity clone(){
+	public Entity clone(){
 		return this;
 	}
 }

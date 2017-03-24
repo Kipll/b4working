@@ -1,6 +1,7 @@
 package game;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.xml.parsers.ParserConfigurationException;
 
 import levels.Level;
 import levels.TestLevel;
@@ -48,9 +49,9 @@ public class Game{
 	
 	//private Viewport viewport;
 	
-	Animation arena;
+	//Animation arena;
 	
-	private Level level = new TestLevel(roomW, roomH);
+	private Level level;
 	
 	public Random rand;
 	
@@ -114,9 +115,19 @@ public class Game{
 		monstersWaiting = new LinkedList<Monster>();
 		entitiesWaiting = new LinkedList<Entity>();
 		
-		roomW = 5.0;
-		roomH = 3.0;
+		roomW = 4;
+		roomH = 3;
 		
+		try {
+			level = new Level("Resources/LevelFiles/smallestlavamap.xml");
+		} catch (ParserConfigurationException e) {
+			try {
+				level = new Level("../Resources/LevelFiles/smallestlavamap.xml");
+			} catch (ParserConfigurationException e1) {
+				System.err.println("Failed to load level");
+				e1.printStackTrace();
+			}
+		}
 		
 		/*Player p = new Player(this, keyboard, mouse);
 		p.viewport = new Viewport(this, p);
@@ -133,7 +144,7 @@ public class Game{
 		
 		new MainServer(port, this).start();
 		
-		arena = new Animation(SpritesheetEnum.ARENA,0,0,1,Animation.AnimationMode.LOOP);
+		//arena = new Animation(SpritesheetEnum.ARENA,0,0,1,Animation.AnimationMode.LOOP);
 		
 		rand = new Random();
 		maxSpawnTime = 4.3;
@@ -188,8 +199,9 @@ public class Game{
 		//g.setColor(Color.GREEN);
 		//Point roomCoord = viewport.toScreenCoord(new Point2D.Double(0,0));
 		//g.fillRect(roomCoord.x, roomCoord.y, (int)(roomW*viewport.ppu), (int)(roomH*viewport.ppu));
-		
-		viewport.drawSprite(new Rectangle.Double(0,0,roomW,roomH), arena, g);
+		level.drawBackTiles(g, viewport);
+		level.drawMiddleTiles(g, viewport);
+		//viewport.drawSprite(new Rectangle.Double(0,0,roomW,roomH), arena, g);
 		
 		Iterator<Player> pit = players.iterator();
 		while(pit.hasNext())pit.next().draw(g, viewport);
