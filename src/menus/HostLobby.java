@@ -151,6 +151,12 @@ public class HostLobby extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Main().start();
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				new TCPClient(4445, "localhost");
 				server.StartAll();
 				
