@@ -45,6 +45,7 @@ public class Game{
 	public LinkedList<Entity> entitiesWaiting;
 	
 	public Server server;
+	private final int[] ENDGAMEMESSAGE = new int[]{-6,0,0,0,0,0,0,0,0,0};
 	public static int port = 4445;
 	
 	//private Viewport viewport;
@@ -172,13 +173,15 @@ public class Game{
 		if(noPlayers != 0 && deadPlayers == noPlayers){
 			gameOver = true;
 			isRunning = false;
+			this.gameOver = true;
+			isRunning = false;
+			this.server.addToQueue(ENDGAMEMESSAGE);
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				
 			}
-			System.out.println("they're all dead jim");
-
+			
 		}
 		ListIterator<Monster> mit = monsters.listIterator(0);
 		while(mit.hasNext()){Monster m = mit.next(); m.update(delta, this); if(m.disposable()) mit.remove();}
