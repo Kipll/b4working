@@ -143,7 +143,7 @@ public class HostLobby extends JPanel {
 		
 		btnStart = new JButton();
 		btnStart.setBounds(694, 450, 180, 100);
-		ImageIcon btnJoinGameIcon = MenuButtonHandler.loadImageIcon("Resources/Images/join_game_button.png", 180, 100);
+		ImageIcon btnJoinGameIcon = MenuButtonHandler.loadImageIcon("Resources/Images/start_game_2.png", 180, 100);
 		btnStart.setIcon(btnJoinGameIcon);
 		btnStart.setBorderPainted(false);
 		btnStart.addActionListener(new ActionListener() {
@@ -173,7 +173,7 @@ public class HostLobby extends JPanel {
 
 		btnBack = new JButton();
 		btnBack.setBounds(20, 450, 180, 100);
-		ImageIcon btnBackIcon = MenuButtonHandler.loadImageIcon("Resources/Images/back_button.png", 180, 100);
+		ImageIcon btnBackIcon = MenuButtonHandler.loadImageIcon("Resources/Images/back_button_2.png", 180, 100);
 		btnBack.setIcon(btnBackIcon);
 		btnBack.setBorderPainted(false);
 		btnBack.addActionListener(new ActionListener() {
@@ -207,15 +207,15 @@ public class HostLobby extends JPanel {
 
 	private void addUsrNcn(){
 		lblNickname = new JLabel("New label");
-		lblNickname.setIcon(MenuButtonHandler.loadImageIcon("Resources/Images/nickname_label.jpg", 386, 176));
-		lblNickname.setBounds(10, 163, 386, 176);
+		lblNickname.setIcon(MenuButtonHandler.loadImageIcon("Resources/Images/nickname_label_2.jpg", 436, 124));
+		lblNickname.setBounds(10, 193, 436, 124);
 		add(lblNickname);
 	}
 
 
 	private void addTxtNNm(){
 	txtNickname = new JTextField("Set Nickname");
-	txtNickname.setBounds(202, 237, 130, 23);
+	txtNickname.setBounds(252, 250, 130, 23);
 	txtNickname.setColumns(10);
 	txtNickname.setFont(txtFont);
 	txtNickname.setBorder(javax.swing.BorderFactory.createEmptyBorder());

@@ -91,7 +91,7 @@ public class LobbyMember extends JPanel {
 		
 		btnBack = new JButton();
 		btnBack.setBounds(20, 450, 180, 100);
-		ImageIcon btnBackIcon = MenuButtonHandler.loadImageIcon("Resources/Images/back_button.png", 180, 100);
+		ImageIcon btnBackIcon = MenuButtonHandler.loadImageIcon("Resources/Images/back_button.png_2", 180, 100);
 		btnBack.setIcon(btnBackIcon);
 		btnBack.setBorderPainted(false);
 		btnBack.addActionListener(new ActionListener() {
@@ -107,13 +107,13 @@ public class LobbyMember extends JPanel {
 		add(btnBack);
 	
 		lblNickname = new JLabel("New label");
-		lblNickname.setIcon(MenuButtonHandler.loadImageIcon("Resources/Images/nickname_label.jpg", 386, 176));
-		lblNickname.setBounds(10, 163, 386, 176);
+		lblNickname.setIcon(MenuButtonHandler.loadImageIcon("Resources/Images/nickname_label_2.jpg", 436, 124));
+		lblNickname.setBounds(10, 193, 436, 124);
 		add(lblNickname);
 		
 		
 		txtNickname = new JTextField();
-		txtNickname.setBounds(199, 235, 149, 33);
+		txtNickname.setBounds(252, 250, 130, 23);
 		txtNickname.setColumns(10);
 		txtNickname.setFont(txtFont);
 		txtNickname.setBorder(javax.swing.BorderFactory.createEmptyBorder());

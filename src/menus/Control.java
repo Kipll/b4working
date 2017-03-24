@@ -20,10 +20,7 @@ import menus.Mainframe;
  * @author Jack Marshman
  */
 
-//TODO
-//Create and add graphics to new JButtons w/ Miruna
-//Update controls graphic to fix background graphic
-//Add graphics to resources
+
 public class Control extends JPanel
 {
 	private static final long serialVersionUID = 1L;
@@ -90,7 +87,7 @@ public class Control extends JPanel
 		int controlsHeight = 240;
 		JLabel controlsLabel = new JLabel();
 		controlsLabel.setBounds(95, 172, controlsWidth, controlsHeight);
-		ImageIcon controlsIcon = MenuButtonHandler.loadImageIcon("Resources/Images/controls4.png", controlsWidth, controlsHeight); 
+		ImageIcon controlsIcon = MenuButtonHandler.loadImageIcon("Resources/Images/controls_final.jpg", controlsWidth, controlsHeight); 
 		controlsLabel.setIcon(controlsIcon);
 		add(controlsLabel);	
 		
