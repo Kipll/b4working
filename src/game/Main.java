@@ -90,7 +90,8 @@ public class Main extends Thread {
         
         window.addKeyListener(m.gamePane.keyboard);
 		window.addMouseListener(m.gamePane.mouse);
-
+		
+		window.setVisible(true);
 //		JFrame window = new JFrame("Test");
 //		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		window.setSize(640,420);
