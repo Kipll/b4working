@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.sql.ConnectionPoolDataSource;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -80,6 +81,8 @@ public class HostLobby extends JPanel {
 	public void updatePlayers(InetAddress inetAddress, String string){
 		Object[] obs = {inetAddress, string};
 		tableModel.addRow(obs);
+		String[][] table = new String[tableModel.getRowCount()][tableModel.getColumnCount()];
+		server.updatePlayers(table);
 	}
 	
 	public void updateOwnerNickname(){
@@ -147,18 +150,12 @@ public class HostLobby extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				click.playOnce();
-				Main m = new Main();
-				m.start();
+				Main.main(null);
 				server.StartAll();
-				//server.reset();
-				
-				TCPClient c = new TCPClient(4445, "localhost");
-				
 				
 			}
 		});
+			
 		
 		add(btnStart);
 

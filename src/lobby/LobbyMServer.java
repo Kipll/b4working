@@ -89,6 +89,9 @@ public class LobbyMServer extends Thread {
 		}
 		
 	}
+	public void updatePlayers(String[][] table){
+		System.out.println("update players needs to be done");
+	}
 
 	
 	private String getLocalName() {
