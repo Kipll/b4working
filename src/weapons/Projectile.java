@@ -25,6 +25,8 @@ public class Projectile extends Entity implements Cloneable{
 	public boolean hitsPlayers;
 	public boolean hitsMonsters;
 	
+	public double drawAngle;
+	
 	public Color color;
 	public Animation anim;
 	
@@ -34,6 +36,8 @@ public class Projectile extends Entity implements Cloneable{
 		this.hitbox = hitbox;
 		this.immunityTime = immunityTime;
 		this.player = player;
+		this.drawAngle = 0;
+		if(player!=null)drawAngle = player.getAngle();
 		this.hasLifetime = hasLifetime;
 		this.lifetime = lifetime;
 		this.breaksOnContact = breaksOnContact;
@@ -98,7 +102,9 @@ public class Projectile extends Entity implements Cloneable{
 			if(hitbox instanceof CircleSector) viewport.drawCircleSector(getPos(), getSize(), ((CircleSector)hitbox).getArcStart(), ((CircleSector)hitbox).getArcLen(), color, g);
 			else if(hitbox instanceof Circle) viewport.drawCircle(getPos(), getSize(), color, g);
 		}
-		else viewport.drawCircleSprite(getPos(), getSize(), anim, g);
+		else {
+		    viewport.drawCircleSprite(getPos(), getSize(), anim, g, drawAngle);
+		}
 	}
 	
 	@Override

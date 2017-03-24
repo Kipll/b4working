@@ -212,12 +212,20 @@ public class Game{
 	}
 	
 	public void drawOnViewport(Graphics2D g, Viewport viewport){
-		int ints[] = new int[10];
-		for(int i=0;i<ClientListener.inputSize;i++)
-			ints[i] = -1;
-			viewport.server.addToQueue(ints);
 	
-	
+	        viewport.server.addToQueue(new int[]{
+					-1,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+			});
+			
 		viewport.drawRectAbsolute(new Point(0,0), viewport.screenW, viewport.screenH, Color.BLACK, g);
 		
 		
@@ -228,6 +236,8 @@ public class Game{
 		level.drawMiddleTiles(g, viewport);
 		//viewport.drawSprite(new Rectangle.Double(0,0,roomW,roomH), arena, g);
 		
+		level.drawFrontTiles(g, viewport);
+		
 		Iterator<Player> pit = players.iterator();
 		while(pit.hasNext())pit.next().draw(g, viewport);
 		ListIterator<Monster> mit = monsters.listIterator(0);
@@ -235,9 +245,23 @@ public class Game{
 		ListIterator<Entity> eit = entities.listIterator(0);
 		while(eit.hasNext())eit.next().draw(g, viewport);
 		
-		level.drawFrontTiles(g, viewport);
 		
 		viewport.drawRectAbsolute(new Point(30,60),100,10, Color.BLACK, g);
 		viewport.drawRectAbsolute(new Point(30,60),(int)(100 * viewport.p.hp / viewport.p.maxHp),10, Color.RED, g);
+		
+		
+	
+	        viewport.server.addToQueue(new int[]{
+					-1,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+			});
 	}
 }

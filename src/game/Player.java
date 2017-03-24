@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 
 import game.Animation.AnimationMode;
 
-//import audio.SFX;
+import audio.BGM;
 
 public class Player extends Entity {
 	public KeyboardInput keyboard;
@@ -29,7 +29,9 @@ public class Player extends Entity {
 	public double immunityTime;
 	public double maxImmunityTime;
 	public Animation anim;
+
 	public boolean isDead;
+
 	private int lastSet;
 	
 	public double exp;
@@ -64,14 +66,12 @@ public class Player extends Entity {
 		viewport.server.addToQueue(0);
 	}
 */
-//	public SFX sword_swing, pew_pew;
+	public BGM sword_swing, pew_pew;
 	
 	private static final double sqrt2 = Math.sqrt(2);
 
-	//Luke
-	//returns angle clockwise from north (i think)
-	private double getAngle(){
-		return Math.atan2(pos.y - mouse.getPos().y, pos.x - mouse.getPos().x) - Math.PI / 2;
+	public double getAngle(){
+		return Math.atan2(viewport.toGameCoord(mouse.getPos()).y - pos.y, viewport.toGameCoord(mouse.getPos()).x - pos.x);
 	}
 
 	public Player(Game game, KeyboardInput keyboard, MouseInput mouse) {
@@ -80,23 +80,23 @@ public class Player extends Entity {
 		this.mouse = mouse;
 		// this.viewport = viewport;
 		this.keyboard = keyboard;
-		pos = new Point2D.Double(0.125, 0.125);
+		pos = new Point2D.Double(0.0, 0.0);
 		size = 0.14; // used to be 0.28
 		speed = 1.0;
 		weapon = new Weapon[2];
 		weapon[0] = new Gun(game, this);
-		weapon[1] = new Laser(game, this);
+		weapon[1] = new Sword(game, this);
 		hitbox = new Circle(size, pos);
-		maxHp = 400;
+		maxHp = 200;
 		hp = maxHp;
-		isDead = false;
 		maxImmunityTime = 0.7;
 		immunityTime = 0;
+		isDead = false;
 		anim = new Animation(SpritesheetEnum.PLAYER, 0, 0, 0.1, Animation.AnimationMode.LOOP);
 		exp = 0;
 
-	//	sword_swing = new SFX(50, "/Music/SFX_Swoosh.mp3");
-	//	pew_pew = new SFX(50, "/Music/SFX_Hit_2.wav");
+		sword_swing = new BGM(50, "/Music/SFX_Swoosh.wav");
+		pew_pew = new BGM(50, "/Music/SFX_Hit_2.wav");
 	}
 
 	@Override
@@ -137,8 +137,8 @@ public class Player extends Entity {
 			}
 			if (keyboard.keyDown(KeyEvent.VK_A)) {
 				dx += Math.max(pos.x - speed * delta, size) - pos.x;
-				anim.setSet(1);
-				lastSet=1;
+				//anim.setSet(1);
+				//lastSet=1;
 			}
 			if (keyboard.keyDown(KeyEvent.VK_S)) {
 				dy += Math.min(pos.y + speed * delta, game.roomH - size) - pos.y;
@@ -196,12 +196,12 @@ public class Player extends Entity {
 			if (mouse.isPressed(0) && hp > 0) {
 				weapon[0].use(viewport.toGameCoord(mouse.getPos()));
 
-		//		sword_swing.play();
+				sword_swing.playOnce();
 			}
 			if (mouse.isPressed(1) && hp > 0) {
 				weapon[1].use(viewport.toGameCoord(mouse.getPos()));
 
-				//pew_pew.play();
+				pew_pew.playOnce();
 			}
 
 			int l = weapon.length;
@@ -211,16 +211,30 @@ public class Player extends Entity {
 			if (immunityTime > 0)
 				immunityTime -= delta;
 		} else {
-			isDead = true;
-			//SFX scream = new SFX(50, "/Music/SFX_Man_Scream_1.wav");
-			//scream.play();
+			BGM scream = new BGM(50, "/Music/SFX_Man_Scream_1.wav");
+			scream.playOnce();
+			if(!isDead){
+				isDead = true;
+				viewport.server.addToQueue(new int[]{
+					-420,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				});
+			}
 		}
 		
 	}
 
 	@Override
 	public void draw(Graphics2D g, Viewport vp) {
-		vp.drawCircleSprite(pos, size, anim, g);
+		vp.drawCircleSprite(pos, size, anim, g, getAngle());
 		if(vp == viewport){
 			vp.drawCircle(new Point2D.Double(pos.x, pos.y-size), size/4, Color.WHITE, g);
 		}
@@ -233,7 +247,7 @@ public class Player extends Entity {
 
 	@Override
 	public boolean disposable() {
-		return false;
+		return isDead;
 	}
 	
 	

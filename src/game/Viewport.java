@@ -224,7 +224,7 @@ server.addToQueue(message);
 				coord.y + scaleToScreen(2*r),
 				a.frame,
 				a.set,
-				0,
+				((int)(angle*100000000.0)),
 				0,
 				0
 		};
@@ -256,8 +256,7 @@ server.addToQueue(message);
 			ss.offsetW + ss.spriteW * a.frame, ss.offsetH + ss.spriteH * a.set, ss.offsetW + ss.spriteW * (a.frame + 1) - 1, ss.offsetH + ss.spriteH * (a.set + 1) - 1,
 			null);*/
 		
-		int[] message = new int[]{
-				a.ss,
+		int[] message = new int[]{a.ss,
 				coord.x,
 				coord.y,
 				coord.x + scaleToScreen(dest.width),

@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
-//import audio.SFX;
+import audio.BGM;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -76,8 +76,8 @@ public class Monster extends Projectile{
 	
 	public void update(double delta, Game game){
 		if(hp<=0){
-		//	SFX deathSound = new SFX(100, "/Music/SFX_Monster_3.wav");
-		//	deathSound.play();
+			BGM deathSound = new BGM(100, "/Music/SFX_Monster_3.wav");
+			deathSound.playOnce();
 			dead = true;
 			game.setScore(game.score+1);
 			try{
@@ -97,7 +97,7 @@ public class Monster extends Projectile{
 					game.spawnEntity(new WeaponDrop((Point2D.Double)(getPos().clone()),w));
 				}
 				else if(dropType<0.35){
-					game.spawnEntity(new FirstAid(65,(Point2D.Double)(getPos().clone()),0.03));
+					game.spawnEntity(new FirstAid(65,(Point2D.Double)(getPos().clone()),0.08));
 				}
 			}
 			catch(NullPointerException e){}

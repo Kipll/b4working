@@ -1,8 +1,18 @@
 package network;
 
-import java.io.IOException;
-import java.awt.*;
+import java.io.DataInputStream;
 
+import java.io.IOException;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JOptionPane;
+
+import game.KeyboardInput;
+import game.MouseInput;
+import game.Player;
 import game.Spritesheet;
 import game.SpritesheetEnum;
 import game.ClientWindow;
@@ -10,9 +20,15 @@ import game.ClientWindow;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.nio.ByteBuffer;
 
+import game.ClientWindow;
+import game.Spritesheet;
+import game.SpritesheetEnum;
 
 public class ClientListener extends Thread {
 	private DatagramSocket socket;
@@ -25,10 +41,8 @@ public class ClientListener extends Thread {
 	public static final int inputSize = 10;
 	public static final int infoSize = 2;
 	int[] input;
-	private boolean isRunning;
 
 	public ClientListener(DatagramSocket socket, ClientWindow panel) {
-		this.isRunning = true;
 		this.panel = panel;
 		this.input = new int[inputSize];
 		this.info = new int[infoSize];
@@ -39,27 +53,43 @@ public class ClientListener extends Thread {
 	}
 
 	public void run() {
-		while (isRunning) {
+		while (true) {
 			try {
 				socket.receive(packet);
 				recievedData = packet.getData();
 				input = ByteConversion.toInts(recievedData);
+				if(false){
+				    System.out.println("testing");
+				    for (int i = 0; i < input.length; i++) {
+					    System.out.println(input[i]);
+				    }
+				}
 				
-				/* WHY ARE WE DOING GRAPHICS WORK IN MY NETWORKING PACKAGE GUYS >:(  Sam. */
+				
 				if(input[0]>=0){
 					
 						Spritesheet sprs = SpritesheetEnum.getSprite(input[0]);
-					
+						
+						//BufferedImage src = sprs.img.getSubimage(sprs.offsetW + sprs.spriteW * input[5], sprs.offsetH + sprs.spriteH * input[6], sprs.spriteW, sprs.spriteH);
+						
+						AffineTransform t = g.getTransform();
+						double ang = ((double)input[7])/100000000.0;
+						ang/=Math.PI/2;
+						g.rotate((Math.round(ang))*Math.PI/2,(input[1]+input[3])/2,(input[2]+input[4])/2);
+						
 						g.drawImage(sprs.img,
 							input[1], input[2], input[3], input[4],
-							sprs.offsetW + sprs.spriteW * input[5], sprs.offsetH + sprs.spriteH * input[6], sprs.offsetW + sprs.spriteW * (input[5] + 1) - 1, sprs.offsetH + sprs.spriteH * (input[6] + 1) - 1,
+							sprs.offsetW + sprs.spriteW * input[5], sprs.offsetH + sprs.spriteH * input[6], sprs.offsetW + sprs.spriteW * (input[5] + 1), sprs.offsetH + sprs.spriteH * (input[6] + 1),
+							//0, 0, sprs.spriteW, sprs.spriteH,
 							null);
+							
+						g.setTransform(t);
 					}
 						
 					else if(input[0]==-1){
 					
 						g.setColor(Color.WHITE);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 8));
 						g.drawString("Global killcount: " + info[0], 30, 30);
 						g.drawString("Experience: " + info[1], 30, 80);
 		
@@ -79,10 +109,10 @@ public class ClientListener extends Thread {
 					}
 					else if(input[0]==-5){
 						info[input[1]]=input[2];
-					} else if(input[0] ==-6){
-						this.isRunning = false;
-						this.panel.dispose();
-						
+					}
+					else if(input[0]==-420){
+						JOptionPane.showMessageDialog(null, "You died! You scored: " + info[1] + (info[1]==0?". You loser!":"."));
+						panel.dispose();
 					}
 				
 			
