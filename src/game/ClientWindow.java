@@ -39,7 +39,9 @@ public class ClientWindow extends JPanel{
 		frame.setVisible(true);
 	}
 	
-	
+	public void dispose(){
+		frame.dispose();
+	}
 	@Override
 	public void paint(Graphics g){
 		cl.g = (Graphics2D)g;

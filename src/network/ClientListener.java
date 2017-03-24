@@ -25,8 +25,10 @@ public class ClientListener extends Thread {
 	public static final int inputSize = 10;
 	public static final int infoSize = 2;
 	int[] input;
+	private boolean isRunning;
 
 	public ClientListener(DatagramSocket socket, ClientWindow panel) {
+		this.isRunning = true;
 		this.panel = panel;
 		this.input = new int[inputSize];
 		this.info = new int[infoSize];
@@ -37,7 +39,7 @@ public class ClientListener extends Thread {
 	}
 
 	public void run() {
-		while (true) {
+		while (isRunning = false) {
 			try {
 				socket.receive(packet);
 				recievedData = packet.getData();
@@ -77,6 +79,10 @@ public class ClientListener extends Thread {
 					}
 					else if(input[0]==-5){
 						info[input[1]]=input[2];
+					} else if(input[0] ==-6){
+						this.isRunning = false;
+						this.panel.dispose();
+						
 					}
 				
 			
