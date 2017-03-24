@@ -27,12 +27,11 @@ import game.Viewport;
 
 public class Level {
 
-	private static final double width = 0.25;
 	private static final boolean dodebug = true;
 	private int difficulty;
 
-	private double roomW; // in game units
-	private double roomH; // in game units
+	private int noCols; // in game units
+	private int noRows; // in game units
 
 	private static final String imageFolder = "Resources/Images/";
 	private String backgroundImageLocation;
@@ -61,11 +60,7 @@ public class Level {
 	 * CardboardBox(); }
 	 */
 
-	public Level(double roomW, double roomH) {
-		this.roomW = roomW;
-		this.roomH = roomH;
-	}
-
+	
 	public Level(String xml) throws ParserConfigurationException {
 		parseXML(xml);
 	}
@@ -78,10 +73,8 @@ public class Level {
 
 	private void parseXML(String fileName) {
 		HashMap<Integer, Animation> intAnimationMap = new HashMap<Integer, Animation>();
-		ArrayList<Character> charCollisionList = new ArrayList<Character>();
+		// ArrayList<Character> charCollisionList = new ArrayList<Character>();
 
-		
-		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		try {
@@ -90,7 +83,6 @@ public class Level {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-
 
 		Document doc = null;
 		try {
@@ -104,48 +96,46 @@ public class Level {
 			}
 		}
 		doc.getDocumentElement().normalize();
-		
+
 		try {
-			
 
-			/*NodeList tilesetNodes = doc.getElementsByTagName("tileset");
-
-			for (int i = 0; i < tilesetNodes.getLength(); i++) {
-				Node tilesetNode = tilesetNodes.item(i);
-				System.out.println("\nCurrent Element :" + tilesetNode.getNodeName());
-
-				Element tilesetElement = (Element) tilesetNode;
-				boolean collision = tilesetElement.getAttribute("collision").trim().contentEquals("1");
-				System.out.println("Collision = " + collision);
-				NodeList tileNodes = tilesetElement.getElementsByTagName("tile");
-
-				for (int j = 0; j < tileNodes.getLength(); j++) {
-					// System.out.println("\nCurrent Element :" +
-					// tilesetNode.getNodeName());
-					Node tileNode = tileNodes.item(j);
-					Element tileElement = (Element) tileNode;
-
-					debug(tileElement.getAttribute("name"));
-
-					int x = Integer.parseInt(tileElement.getAttribute("x").trim());
-					int y = Integer.parseInt(tileElement.getAttribute("y").trim());
-					Character c = tileElement.getAttribute("char").charAt(0);
-
-					debug("x = " + String.valueOf(x));
-					debug("y = " + String.valueOf(y));
-					debug("c = " + String.valueOf(c));
-					debug("");
-
-					charAnimationMap.put(c, new Animation(spritesheetVal, x, y, 0, Animation.AnimationMode.PLAYONCE));
-
-					if (collision) {
-						charCollisionList.add(c);
-					}
-				}
-
-			}
-
-			System.out.print(charAnimationMap.toString());*/
+			/*
+			 * NodeList tilesetNodes = doc.getElementsByTagName("tileset");
+			 * 
+			 * for (int i = 0; i < tilesetNodes.getLength(); i++) { Node
+			 * tilesetNode = tilesetNodes.item(i);
+			 * System.out.println("\nCurrent Element :" +
+			 * tilesetNode.getNodeName());
+			 * 
+			 * Element tilesetElement = (Element) tilesetNode; boolean collision
+			 * =
+			 * tilesetElement.getAttribute("collision").trim().contentEquals("1"
+			 * ); System.out.println("Collision = " + collision); NodeList
+			 * tileNodes = tilesetElement.getElementsByTagName("tile");
+			 * 
+			 * for (int j = 0; j < tileNodes.getLength(); j++) { //
+			 * System.out.println("\nCurrent Element :" + //
+			 * tilesetNode.getNodeName()); Node tileNode = tileNodes.item(j);
+			 * Element tileElement = (Element) tileNode;
+			 * 
+			 * debug(tileElement.getAttribute("name"));
+			 * 
+			 * int x = Integer.parseInt(tileElement.getAttribute("x").trim());
+			 * int y = Integer.parseInt(tileElement.getAttribute("y").trim());
+			 * Character c = tileElement.getAttribute("char").charAt(0);
+			 * 
+			 * debug("x = " + String.valueOf(x)); debug("y = " +
+			 * String.valueOf(y)); debug("c = " + String.valueOf(c)); debug("");
+			 * 
+			 * charAnimationMap.put(c, new Animation(spritesheetVal, x, y, 0,
+			 * Animation.AnimationMode.PLAYONCE));
+			 * 
+			 * if (collision) { charCollisionList.add(c); } }
+			 * 
+			 * }
+			 * 
+			 * System.out.print(charAnimationMap.toString());
+			 */
 
 			NodeList mapNodes = doc.getElementsByTagName("map");
 
@@ -167,27 +157,27 @@ public class Level {
 					throw new IllegalArgumentException("No map found");
 				}
 
-				roomH = mapLines.length - 2;
-				roomW = mapLines[1].split(",").length;
+				noRows = mapLines.length - 2;
+				noCols = mapLines[1].split(",").length;
 
-				for (int j = 1; j < roomH; j++) {
+				for (int j = 1; j < noRows; j++) {
 					String[] rowItems = mapLines[j].split(",");
 
-					if (rowItems.length != roomW && j != roomH -1) {
-						for (int z = 0; z < rowItems.length; z++){
+					if (rowItems.length != noCols && j != noRows - 1) {
+						for (int z = 0; z < rowItems.length; z++) {
 							System.out.println(rowItems[z]);
 						}
 						System.out.println(mapLines[j].length());
 						System.out.println(rowItems.length);
-						System.out.println(roomW);
-						System.out.println(roomH);
+						System.out.println(noCols);
+						System.out.println(noRows);
 						System.out.println(j);
 						throw new IllegalArgumentException("Widths are not consistent");
 					}
 					// debug(mapLines[j]);
 					// System.out.println(mapLines[j].length());
 
-					for (int k = 0; k < roomW; k++) {
+					for (int k = 0; k < noCols; k++) {
 						// System.out.println(k);
 						int currentInt = Integer.parseInt(rowItems[k]);
 
@@ -195,18 +185,19 @@ public class Level {
 
 							int x = k;
 							int y = j - 1;
-							int spriteX = (currentInt -1) % 32;
-							int spriteY = (currentInt -1) / 32;
+							int spriteX = (currentInt - 1) % 32;
+							int spriteY = (currentInt - 1) / 32;
 							// int x = k;
 							// int y = j - 1;
 							Animation anim;
 							if (intAnimationMap.containsKey(currentInt)) {
 								anim = intAnimationMap.get(currentInt);
 							} else {
-								anim = new Animation(spritesheetVal, spriteX, spriteY, 1, Animation.AnimationMode.PLAYONCE);
+								anim = new Animation(spritesheetVal, spriteX, spriteY, 1,
+										Animation.AnimationMode.PLAYONCE);
 								intAnimationMap.put(currentInt, anim);
 							}
-							
+
 							Tile tile = new Tile(x, y, anim);
 
 							switch (layer) {
@@ -226,11 +217,13 @@ public class Level {
 								throw new IllegalArgumentException("Map layer must be in the range 0-2");
 							}
 
-							/*if (charCollisionList.contains(currentChar)) {
-								// TODO Add position to a list of collisions
-								collisionTiles.add(tile);
-
-							}*/
+							/*
+							 * if (charCollisionList.contains(currentChar)) { //
+							 * TODO Add position to a list of collisions
+							 * collisionTiles.add(tile);
+							 * 
+							 * }
+							 */
 						}
 
 					}
@@ -292,12 +285,20 @@ public class Level {
 		return difficulty;
 	}
 
-	public double getRoomW() {
-		return roomW;
+	public int getNoCols() {
+		return noCols;
 	}
 
-	public double getRoomH() {
-		return roomH;
+	public int getNoRows() {
+		return noRows;
+	}
+	
+	public double getLevelWidth() {
+		return (double) noCols * Tile.width;
+	}
+
+	public double getLevelHeight() {
+		return (double) noRows * Tile.width;
 	}
 
 	public String getImageLocation() {

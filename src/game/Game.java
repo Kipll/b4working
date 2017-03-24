@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 import javax.xml.parsers.ParserConfigurationException;
 
 import levels.Level;
-import levels.TestLevel;
 import network.ServerListener;
 import network.ClientListener;
 import network.Server;
@@ -116,16 +115,18 @@ public class Game{
 		monstersWaiting = new LinkedList<Monster>();
 		entitiesWaiting = new LinkedList<Entity>();
 		
-		roomW = 4;
-		roomH = 3;
+		
 		
 		
 		try {
-			level = new Level("Resources/LevelFiles/smallestlavamap.xml");
+			level = new Level("Resources/LevelFiles/10x10grassy.xml");
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		roomW = level.getLevelWidth();
+		roomH = level.getLevelHeight();
 		
 		/*Player p = new Player(this, keyboard, mouse);
 		p.viewport = new Viewport(this, p);
