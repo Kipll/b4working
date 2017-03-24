@@ -53,6 +53,7 @@ public class ClientListener extends Thread {
 		
 				try {
 					socket.receive(packet);
+					System.out.println("message recieveced");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

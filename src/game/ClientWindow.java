@@ -67,14 +67,17 @@ public class ClientWindow extends JPanel{
 	else if(input[0]==-2){
 		g.setColor(new Color(input[1], input[2], input[3]));
 		g.fillOval(input[4], input[5], input[6], input[7]);
+		this.paint(g);
 	}
 	else if(input[0]==-3){
 		g.setColor(new Color(input[1], input[2], input[3]));
 		g.fillRect(input[4], input[5], input[6], input[7]);
+		this.paint(g);
 	}
 	else if(input[0]==-4){
 		g.setColor(new Color(input[1], input[2], input[3]));
 		g.fillArc(input[4], input[5], input[6], input[7], input[8], input[9]);
+		this.paint(g);
 	}
 	else if(input[0]==-5){
 		info [input[1]]=input[2];
@@ -87,6 +90,7 @@ System.out.println("caught classcastException");
 	
 @Override
 	public void paint(Graphics g){
-		cl.g = (Graphics2D)g;
+		System.out.println("paint has been called");
+		this.g = (Graphics2D)g;
 	}
 }

@@ -44,14 +44,15 @@ public class LobbyMServer extends Thread {
 	
 				System.out.println("to connect use name : " + getLocalName());
 				Socket clientSocket = socket.accept();
-				System.out.println("connection accepted");
+				System.out.println("connection accepted from" + clientSocket.getLocalAddress().toString());
 				sc = new LobbyServer(clientSocket, lobby);
-				this.connections.add(sc);
 				String nickname;
 				nickname = new DataInputStream(clientSocket.getInputStream()).readUTF();
 			
 				this.lobby.updatePlayers(clientSocket.getInetAddress(), nickname);
 				sc.start();
+				this.connections.add(sc);
+			
 			}catch(SocketException e1){
 				
 			} catch (IOException e) {
@@ -83,7 +84,7 @@ public class LobbyMServer extends Thread {
 	/**
 	 * This method should be invoked when the lobby owner wishes to start the game.
 	 */
-	public void StartAll() {
+	public void startAll() {
 		for (int i = 0; i < connections.size(); i++) {
 			connections.get(i).addToQueue("**STARTGAME**");;
 		}

@@ -40,13 +40,13 @@ public class MainServer extends Thread {
 	public void run() {
 		ServerSocket serverSocket;
 		try {
-			serverSocket = new ServerSocket(port);
+			serverSocket = new ServerSocket(port);//@@@@@@@@@@@@@@@@@@@@@@ change the  +1
 			int c = 0;
 			while (true) {
 
 				String name = getLocalName();
 
-				System.out.println("To connect to this server use this name : " + name);
+				System.out.println("**MAIN SERVER STARTING** " + name);
 
 				Socket clientSocket = serverSocket.accept(); // accept a new
 				System.out.println("past serverSocket.accept()");// connection,
