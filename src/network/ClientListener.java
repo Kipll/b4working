@@ -1,15 +1,8 @@
 package network;
 
-import java.io.DataInputStream;
-
 import java.io.IOException;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.*;
 
-import game.KeyboardInput;
-import game.MouseInput;
-import game.Player;
 import game.Spritesheet;
 import game.SpritesheetEnum;
 import game.ClientWindow;
@@ -17,14 +10,9 @@ import game.ClientWindow;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.nio.ByteBuffer;
 
-import game.ClientWindow;
-import game.Spritesheet;
-import game.SpritesheetEnum;
 
 public class ClientListener extends Thread {
 	private DatagramSocket socket;
@@ -55,7 +43,7 @@ public class ClientListener extends Thread {
 				recievedData = packet.getData();
 				input = ByteConversion.toInts(recievedData);
 				
-				
+				/* WHY ARE WE DOING GRAPHICS WORK IN MY NETWORKING PACKAGE GUYS >:(  Sam. */
 				if(input[0]>=0){
 					
 						Spritesheet sprs = SpritesheetEnum.getSprite(input[0]);
