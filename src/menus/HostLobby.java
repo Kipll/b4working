@@ -150,7 +150,7 @@ public class HostLobby extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Main.main(null);
+				new Main().start();
 				new TCPClient(4445, "localhost");
 				server.StartAll();
 				
