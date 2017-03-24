@@ -80,21 +80,33 @@ public class Level {
 		HashMap<Integer, Animation> intAnimationMap = new HashMap<Integer, Animation>();
 		ArrayList<Character> charCollisionList = new ArrayList<Character>();
 
-		File file;
+		
+		
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = null;
 		try {
-			file = new File(fileName);
-
-		} catch (Exception e) {
-			file = new File("../" + fileName);
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
+
+
+		Document doc = null;
+		try {
+			doc = builder.parse(new File(fileName));
+		} catch (SAXException | IOException e1) {
+			try {
+				doc = builder.parse(new File("../" + fileName));
+			} catch (SAXException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		doc.getDocumentElement().normalize();
 		
 		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-
-
-			Document doc = builder.parse(file);
-			doc.getDocumentElement().normalize();
+			
 
 			/*NodeList tilesetNodes = doc.getElementsByTagName("tileset");
 
@@ -244,16 +256,7 @@ public class Level {
 
 			}
 
-		} catch (ParserConfigurationException e) {
-			// Error creating builder
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// Error getting input
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// Error parsing
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// Error parsing
 			e.printStackTrace();
 		}
