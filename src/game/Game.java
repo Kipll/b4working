@@ -60,6 +60,7 @@ public class Game{
 	public double timeUntilSpawn;
 	
 	int score = 0;
+	private boolean gameOver;
 	
 	public void spawnEntity(Entity e){
 		entitiesWaiting.add(e);
@@ -105,7 +106,7 @@ public class Game{
 	
 	public Game(KeyboardInput keyboard, MouseInput mouse){
 		isRunning = true;
-		
+		gameOver = false;
 		this.keyboard = keyboard;
 		this.mouse = mouse;
 		
@@ -159,7 +160,29 @@ public class Game{
 		entitiesWaiting = new LinkedList<Entity>();
 		
 		Iterator<Player> pit = players.iterator();
-		while(pit.hasNext()){Player p = pit.next(); p.update(delta, this); if(p.disposable()) pit.remove();}
+		int noPlayers = players.size();
+		int deadPlayers = 0;
+		while(pit.hasNext()){
+			Player p = pit.next();
+			p.update(delta, this);
+			if(p.isDead){
+				deadPlayers++;
+			}
+			if(p.disposable()){ 
+				pit.remove();
+			}
+		}
+		if(noPlayers != 0 && deadPlayers == noPlayers){
+			gameOver = true;
+			isRunning = false;
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println("they're all dead jim");
+
+		}
 		ListIterator<Monster> mit = monsters.listIterator(0);
 		while(mit.hasNext()){Monster m = mit.next(); m.update(delta, this); if(m.disposable()) mit.remove();}
 		ListIterator<Entity> eit = entities.listIterator(0);

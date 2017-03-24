@@ -70,13 +70,14 @@ public class Main extends Thread {
 		  // update the game logic
 		  gamePane.game.update((double)updateLength / 1000000000.0);
 		  
-		  // draw everyting
+		  // draw everything
 		  gamePane.paintImmediately(gamePane.getBounds());
 		  
 		  //this is in ms, whereas our lastLoopTime etc. vars are in ns.
 		  try{Thread.sleep( (lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000 );}
 		  catch(Exception e){System.out.println(e.getMessage());}
 	   }
+	   window.dispose();
 	}
 	
 	public static void main(String args[]){

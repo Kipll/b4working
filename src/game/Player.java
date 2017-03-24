@@ -29,7 +29,7 @@ public class Player extends Entity {
 	public double immunityTime;
 	public double maxImmunityTime;
 	public Animation anim;
-
+	public boolean isDead;
 	private int lastSet;
 	
 	public double exp;
@@ -89,6 +89,7 @@ public class Player extends Entity {
 		hitbox = new Circle(size, pos);
 		maxHp = 200;
 		hp = maxHp;
+		isDead = false;
 		maxImmunityTime = 0.7;
 		immunityTime = 0;
 		anim = new Animation(SpritesheetEnum.PLAYER, 0, 0, 0.1, Animation.AnimationMode.LOOP);
@@ -210,6 +211,7 @@ public class Player extends Entity {
 			if (immunityTime > 0)
 				immunityTime -= delta;
 		} else {
+			isDead = true;
 			//SFX scream = new SFX(50, "/Music/SFX_Man_Scream_1.wav");
 			//scream.play();
 		}
