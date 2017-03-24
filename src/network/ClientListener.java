@@ -50,57 +50,20 @@ public class ClientListener extends Thread {
 
 	public void run() {
 		while (true) {
-			try {
-				socket.receive(packet);
+		
+				try {
+					socket.receive(packet);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				recievedData = packet.getData();
 				input = ByteConversion.toInts(recievedData);
+				panel.newMessage(input);
 				
-				
-				if(input[0]>=0){
-					
-						Spritesheet sprs = SpritesheetEnum.getSprite(input[0]);
-					
-						g.drawImage(sprs.img,
-							input[1], input[2], input[3], input[4],
-							sprs.offsetW + sprs.spriteW * input[5], sprs.offsetH + sprs.spriteH * input[6], sprs.offsetW + sprs.spriteW * (input[5] + 1) - 1, sprs.offsetH + sprs.spriteH * (input[6] + 1) - 1,
-							null);
-					}
-						
-					else if(input[0]==-1){
-					
-						g.setColor(Color.WHITE);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 8));
-						g.drawString("Global killcount: " + info[0], 30, 30);
-						g.drawString("Experience: " + info[1], 30, 80);
-		
-						panel.paintImmediately(panel.getBounds());
-					}
-					else if(input[0]==-2){
-						g.setColor(new Color(input[1], input[2], input[3]));
-						g.fillOval(input[4], input[5], input[6], input[7]);
-					}
-					else if(input[0]==-3){
-						g.setColor(new Color(input[1], input[2], input[3]));
-						g.fillRect(input[4], input[5], input[6], input[7]);
-					}
-					else if(input[0]==-4){
-						g.setColor(new Color(input[1], input[2], input[3]));
-						g.fillArc(input[4], input[5], input[6], input[7], input[8], input[9]);
-					}
-					else if(input[0]==-5){
-						info[input[1]]=input[2];
-					}
-				
-			
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassCastException e2) {
-			 System.out.println("caught classcastException");
 			}
-		}
-	}
 
-	
+	}	
 }
 /*public class ClientListener extends Thread {
 
