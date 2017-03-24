@@ -24,15 +24,15 @@ public class Main extends Thread {
 		
 		JFrame window = new JFrame("Test");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(640,420);
+		window.setSize(1,1);
         window.add(this.gamePane);
         
         window.addKeyListener(this.gamePane.keyboard);
 		window.addMouseListener(this.gamePane.mouse);
 		window.addMouseMotionListener(this.gamePane.mouse);
         
-        //window.setVisible(true);
-
+        window.setVisible(true);
+        
 		
 	//	bgm.play();
         //	bgm.update();
