@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <level title="Test Level">
-	<tileset collision="0">
-		<tile char="L" x="16" y="3" name="lava"/>
-		<tile char="l" x="1" y="5" name="yellow mud with crack"/>
-		<tile char="o" x="0" y="5" name="yellow mud with stain"/>
-	</tileset>
-	<tileset collision="1">
-		<tile char="b" x="30" y="14" name="a nice boulder"/>
-	</tileset>
 	<map layer="0">
 175,175,173,175,175,175,174,174,
 173,174,174,174,175,175,173,175,

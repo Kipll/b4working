@@ -119,12 +119,7 @@ public class Game{
 		
 		
 		
-		try {
-			level = new Level("Resources/LevelFiles/10x10grassy.xml");
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		level = new Level("Resources/LevelFiles/10x10grassy.xml");
 		
 		roomW = level.getLevelWidth();
 		roomH = level.getLevelHeight();
@@ -141,7 +136,7 @@ public class Game{
 		p.viewport.server = server;
 		
 		server.listen(port, p);*/
-		
+	
 		new MainServer(port, this).start();
 		
 		//arena = new Animation(SpritesheetEnum.ARENA,0,0,1,Animation.AnimationMode.LOOP);
