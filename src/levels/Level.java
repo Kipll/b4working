@@ -27,8 +27,8 @@ import game.Viewport;
 
 public class Level {
 
-	private static final boolean dodebug = true;
-	private int difficulty;
+	// private static final boolean dodebug = true;
+	// private int difficulty;
 
 	private int noCols; // in game units
 	private int noRows; // in game units
@@ -38,104 +38,38 @@ public class Level {
 	private int backgroundImageW;
 	private int backgroundImageH;
 
-	private ArrayList<Wave> waveList = new ArrayList<Wave>();
-	private ArrayList<Tile> backTiles = new ArrayList<Tile>(); // tiles behind
-																// all others
-	private ArrayList<Tile> middleTiles = new ArrayList<Tile>(); // tiles on top
-																	// of
-																	// background
-																	// but
-																	// behind
-																	// monsters/players
-	private ArrayList<Tile> frontTiles = new ArrayList<Tile>(); // tiles on top
-																// of
-																// monsters/players
-	private Set<Tile> collisionTiles = new HashSet<Tile>();
+	// private ArrayList<Wave> waveList = new ArrayList<Wave>();
+	private ArrayList<Tile> backTiles = new ArrayList<Tile>();
+	// tiles behind all others
+	private ArrayList<Tile> middleTiles = new ArrayList<Tile>();
+	// tiles on top of background but behind monsters/players
+	private ArrayList<Tile> frontTiles = new ArrayList<Tile>();
+	// tiles on top of monsters/players
+	private ArrayList<Tile> collisionTiles = new ArrayList<Tile>();
 
 	private int spritesheetVal = SpritesheetEnum.TERRAIN;
 
-	/*
-	 * public Level() { this.roomW = 20; this.roomH = 16; //
-	 * this.propList.add(new CardboardBox()); // CardboardBox cb = new
-	 * CardboardBox(); }
-	 */
-
-	
 	public Level(String xml) throws ParserConfigurationException {
 		parseXML(xml);
-	}
-
-	private void debug(String s) {
-		if (dodebug)
-			System.out.println(s);
-
 	}
 
 	private void parseXML(String fileName) {
 		HashMap<Integer, Animation> intAnimationMap = new HashMap<Integer, Animation>();
 		// ArrayList<Character> charCollisionList = new ArrayList<Character>();
 
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = null;
 		try {
-			builder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
 
-		Document doc = null;
-		try {
-			doc = builder.parse(new File(fileName));
-		} catch (SAXException | IOException e1) {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+
+			Document doc = null;
 			try {
+				doc = builder.parse(new File(fileName));
+			} catch (IOException e) {
 				doc = builder.parse(new File("../" + fileName));
-			} catch (SAXException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
-		doc.getDocumentElement().normalize();
 
-		try {
-
-			/*
-			 * NodeList tilesetNodes = doc.getElementsByTagName("tileset");
-			 * 
-			 * for (int i = 0; i < tilesetNodes.getLength(); i++) { Node
-			 * tilesetNode = tilesetNodes.item(i);
-			 * System.out.println("\nCurrent Element :" +
-			 * tilesetNode.getNodeName());
-			 * 
-			 * Element tilesetElement = (Element) tilesetNode; boolean collision
-			 * =
-			 * tilesetElement.getAttribute("collision").trim().contentEquals("1"
-			 * ); System.out.println("Collision = " + collision); NodeList
-			 * tileNodes = tilesetElement.getElementsByTagName("tile");
-			 * 
-			 * for (int j = 0; j < tileNodes.getLength(); j++) { //
-			 * System.out.println("\nCurrent Element :" + //
-			 * tilesetNode.getNodeName()); Node tileNode = tileNodes.item(j);
-			 * Element tileElement = (Element) tileNode;
-			 * 
-			 * debug(tileElement.getAttribute("name"));
-			 * 
-			 * int x = Integer.parseInt(tileElement.getAttribute("x").trim());
-			 * int y = Integer.parseInt(tileElement.getAttribute("y").trim());
-			 * Character c = tileElement.getAttribute("char").charAt(0);
-			 * 
-			 * debug("x = " + String.valueOf(x)); debug("y = " +
-			 * String.valueOf(y)); debug("c = " + String.valueOf(c)); debug("");
-			 * 
-			 * charAnimationMap.put(c, new Animation(spritesheetVal, x, y, 0,
-			 * Animation.AnimationMode.PLAYONCE));
-			 * 
-			 * if (collision) { charCollisionList.add(c); } }
-			 * 
-			 * }
-			 * 
-			 * System.out.print(charAnimationMap.toString());
-			 */
+			doc.getDocumentElement().normalize();
 
 			NodeList mapNodes = doc.getElementsByTagName("map");
 
@@ -146,9 +80,7 @@ public class Level {
 				Element mapElement = (Element) mapNode;
 				int layer = Integer.parseInt(mapElement.getAttribute("layer").trim());
 
-				System.out.println("Layer = " + layer);
 				String mapStr = mapElement.getTextContent();
-				debug(mapStr);
 
 				String[] mapLines = mapStr.split("\\r?\\n");
 
@@ -159,8 +91,10 @@ public class Level {
 
 				noRows = mapLines.length - 2;
 				noCols = mapLines[1].split(",").length;
+				System.err.println("noRows: " + noRows);
+				System.err.println("noCols: " + noCols);
 
-				for (int j = 1; j < noRows; j++) {
+				for (int j = 1; j < noRows + 1; j++) {
 					String[] rowItems = mapLines[j].split(",");
 
 					if (rowItems.length != noCols && j != noRows - 1) {
@@ -214,43 +148,25 @@ public class Level {
 								frontTiles.add(tile);
 								break;
 							default:
-								throw new IllegalArgumentException("Map layer must be in the range 0-2");
+								throw new IllegalArgumentException("Map layer must be in the range -1 to 2");
 							}
 
-							/*
-							 * if (charCollisionList.contains(currentChar)) { //
-							 * TODO Add position to a list of collisions
-							 * collisionTiles.add(tile);
-							 * 
-							 * }
-							 */
 						}
 
 					}
-				}
 
-				/*
-				 * for (int j = 0; j < tileNodes.getLength(); j++) { //
-				 * System.out.println("\nCurrent Element :" + //
-				 * tilesetNode.getNodeName()); Node tileNode =
-				 * tileNodes.item(j); Element tileElement = (WElement) tileNode;
-				 * 
-				 * debug(tileElement.getAttribute("name"));
-				 * 
-				 * int x =
-				 * Integer.parseInt(tileElement.getAttribute("x").trim()); int y
-				 * = Integer.parseInt(tileElement.getAttribute("y").trim());
-				 * char c = tileElement.getAttribute("char").charAt(0);
-				 * 
-				 * debug("x = " + String.valueOf(x)); debug("y = " +
-				 * String.valueOf(y)); debug("c = " + String.valueOf(c));
-				 * debug(""); }
-				 */
+				}
 
 			}
 
-		} catch (Exception e) {
-			// Error parsing
+		} catch (IOException e) {
+			System.err.println("Level file not found.");
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// Error reading file
 			e.printStackTrace();
 		}
 
@@ -281,10 +197,6 @@ public class Level {
 		return;
 	}
 
-	public int getDifficulty() {
-		return difficulty;
-	}
-
 	public int getNoCols() {
 		return noCols;
 	}
@@ -292,7 +204,7 @@ public class Level {
 	public int getNoRows() {
 		return noRows;
 	}
-	
+
 	public double getLevelWidth() {
 		return (double) noCols * Tile.width;
 	}
