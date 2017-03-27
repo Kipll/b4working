@@ -14,7 +14,7 @@ import game.Viewport;
 public class Tile extends Entity {
 
 	/** The Constant width of every tile. */
-	public final static double width = 0.5;
+	public final static double WIDTH = 0.5;
 
 	/** The animation of the tile storing it's image. */
 	private Animation anim;
@@ -41,8 +41,8 @@ public class Tile extends Entity {
 	 */
 	public Tile(int x, int y, Animation anim) {
 		this.anim = anim;
-		pos = new Point2D.Double(x * width, y * width);
-		dest = new Rectangle2D.Double(pos.getX(), pos.getY(), width, width);
+		pos = new Point2D.Double(x * WIDTH, y * WIDTH);
+		dest = new Rectangle2D.Double(pos.getX(), pos.getY(), WIDTH, WIDTH);
 	}
 
 	/*

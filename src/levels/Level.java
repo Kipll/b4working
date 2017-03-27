@@ -238,7 +238,7 @@ public class Level {
 	 * @return the level width in game units
 	 */
 	public double getLevelWidth() {
-		return noCols * Tile.width;
+		return noCols * Tile.WIDTH;
 	}
 
 	/**
@@ -247,7 +247,7 @@ public class Level {
 	 * @return the level height in game units
 	 */
 	public double getLevelHeight() {
-		return noRows * Tile.width;
+		return noRows * Tile.WIDTH;
 	}
 
 	/**
